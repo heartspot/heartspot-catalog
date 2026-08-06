@@ -321,20 +321,88 @@
   @media (max-width:999px){
     .page{ margin-left:auto; margin-right:auto; }
   }
+  /* ================================================================
+     言語切替バー（2026-08-06 多言語化）
+     固定・右上。PCの固定サイドナビは左なので干渉しない。
+     position:fixed なので通常フローには影響しない＝日本語表示は不変。
+     ================================================================ */
+  .langbar{
+    position:fixed;
+    top:.5rem; right:.5rem;
+    z-index:30;
+    display:flex;
+    background:rgba(251,247,236,.94);
+    border:1px solid var(--color-line);
+    border-radius:3px;
+    box-shadow:0 1px 6px rgba(30,30,20,.12);
+    overflow:hidden;
+  }
+  .langbar__btn{
+    appearance:none;
+    -webkit-appearance:none;
+    margin:0;
+    border:0;
+    border-left:1px solid var(--color-line);
+    background:transparent;
+    color:var(--color-navy);
+    font-family:inherit;
+    font-size:.72rem;
+    line-height:1;
+    letter-spacing:.02em;
+    padding:.45rem .55rem;
+    cursor:pointer;
+  }
+  .langbar__btn:first-child{ border-left:0; }
+  .langbar__btn:hover{ background:rgba(30,51,80,.08); }
+  .langbar__btn[aria-pressed="true"]{
+    background:var(--color-navy);
+    color:var(--color-bg);
+    font-weight:600;
+  }
+  @media (min-width:1000px){
+    .langbar{ top:1.2rem; right:1.2rem; }
+    .langbar__btn{ font-size:.78rem; padding:.5rem .7rem; }
+  }
+  /* 対訳が無い（＝構造上その言語に存在しない）要素の非表示。
+     .kogin-divider 等 display 指定のある要素にも効くよう !important を付ける */
+  [hidden]{ display:none !important; }
+
+  /* 言語別フォント。html[lang] で切り替わるため日本語表示（lang="ja"）には一切影響しない。
+     末尾に日本語のフォントスタックを残してあるのは、未訳で日本語のまま出ている箇所が
+     MSゴシック等の既定フォントに落ちて崩れるのを防ぐため（欧文・中文は先頭の書体が当たる） */
+  html[lang="en"] body{
+    font-family:"Helvetica Neue",Helvetica,Arial,"游ゴシック体","Yu Gothic Medium","Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+  }
+  html[lang="en"] h1,html[lang="en"] h2,html[lang="en"] h3,html[lang="en"] h4,
+  html[lang="en"] .sidenav__title{
+    font-family:Georgia,"Times New Roman","游明朝","Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  }
+  html[lang^="zh"] body{
+    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Noto Sans CJK TC","游ゴシック体","Yu Gothic Medium","Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+  }
+  html[lang^="zh"] h1,html[lang^="zh"] h2,html[lang^="zh"] h3,html[lang^="zh"] h4,
+  html[lang^="zh"] .sidenav__title{
+    font-family:"Noto Serif TC","Songti TC","Microsoft JhengHei","游明朝","Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  }
 </style>
 </head>
 <body>
+<div class="langbar" role="group" aria-label="言語切替 / Language / 語言">
+  <button type="button" class="langbar__btn" data-lang="ja" lang="ja">日本語</button>
+  <button type="button" class="langbar__btn" data-lang="en" lang="en">English</button>
+  <button type="button" class="langbar__btn" data-lang="zh" lang="zh-Hant">中文</button>
+</div>
 <nav class="sidenav" aria-label="サイドメニュー">
-  <p class="sidenav__title">目次</p>
+  <p class="sidenav__title" data-i18n="nav.title">目次</p>
   <ul>
-    <li><a href="#top">はじめに</a></li>
-    <li><a href="#story">津軽の手仕事</a></li>
-    <li><a href="#products">商品</a></li>
-    <li><a href="#order-made">オーダーメイド</a></li>
-    <li><a href="#buy">買い方</a></li>
-    <li><a href="#about">ハートスポットについて</a></li>
+    <li><a href="#top" data-i18n="nav.top">はじめに</a></li>
+    <li><a href="#story" data-i18n="nav.story">津軽の手仕事</a></li>
+    <li><a href="#products" data-i18n="nav.products">商品</a></li>
+    <li><a href="#order-made" data-i18n="nav.order">オーダーメイド</a></li>
+    <li><a href="#buy" data-i18n="nav.buy">買い方</a></li>
+    <li><a href="#about" data-i18n="nav.about">ハートスポットについて</a></li>
   </ul>
-  <p class="sidenav__foot">017-773-4327<br>青森市浜田字豊田368</p>
+  <p class="sidenav__foot" data-i18n-html="nav.foot">017-773-4327<br>青森市浜田字豊田368</p>
 </nav>
 
 <div class="page">
@@ -342,211 +410,215 @@
 <header class="hero" id="top">
   <figure class="photo photo--hero">
     <div class="photo__frame" aria-hidden="true"></div>
-    <figcaption>写真: 表紙用。こぎん刺しの生地か手仕事の手元を大きく</figcaption>
+    <figcaption data-i18n="hero.cap">写真: 表紙用。こぎん刺しの生地か手仕事の手元を大きく</figcaption>
   </figure>
   <div class="hero__body">
-    <h1 class="hero__catch">一枚の布に、<br>手仕事の時間を。</h1>
+    <h1 class="hero__catch" data-i18n-html="hero.catch">一枚の布に、<br>手仕事の時間を。</h1>
     <!-- 案2（不採用・保留／最終選定は伎海。採用する場合は下のhero__leadの文章をこちらに差し替える）:
     青森市浜田の作業所「ハートスポット」が、津軽の手仕事をひとつずつ形にしています。
     -->
-    <p class="hero__lead">津軽の手仕事を、青森市浜田の作業所「ハートスポット」がひとつずつ形にしています。</p>
-    <p class="hero__guide">このページでは、こぎん刺し・ねぶた柄の小物・一点もののアクセサリーをご紹介しています。</p>
-    <a class="hero__cta" href="#products">商品を見る ↓</a>
+    <p class="hero__lead" data-i18n="hero.lead">津軽の手仕事を、青森市浜田の作業所「ハートスポット」がひとつずつ形にしています。</p>
+    <p class="hero__guide" data-i18n="hero.guide">このページでは、こぎん刺し・ねぶた柄の小物・一点もののアクセサリーをご紹介しています。</p>
+    <a class="hero__cta" href="#products" data-i18n="hero.cta">商品を見る ↓</a>
   </div>
   <a class="hero__scroll" href="#story" aria-label="次のセクションへスクロール">↓</a>
 </header>
 
 <nav class="menu" aria-label="ページ内メニュー">
-  <a href="#products">商品</a>
-  <a href="#order-made">オーダーメイド</a>
-  <a href="#buy">買い方</a>
-  <a href="#about">ハートスポットについて</a>
+  <a href="#products" data-i18n="nav.products">商品</a>
+  <a href="#order-made" data-i18n="nav.order">オーダーメイド</a>
+  <a href="#buy" data-i18n="nav.buy">買い方</a>
+  <a href="#about" data-i18n="nav.about">ハートスポットについて</a>
 </nav>
 
 <div class="kogin-divider" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
 
+<!-- 多言語: en/zh の本文は ops/notes/kogin-intro-3lang-20260806.md（正本=G:\マイドライブ\こぎん刺し紹介文章.docx）を
+     一字一句変えずに流し込んでいる。段落数が日本語版と異なるため、対訳の無い見出し(story.sub1/sub2)と
+     最終段落(story.p6)は data-i18n-optional を付け、en/zh では非表示にしている。
+     同ファイルの「日本語版」新文面は既存の日本語本文と統合方針が未確定のため未反映（writing起案待ち・2026-08-06）。 -->
 <section id="story" aria-labelledby="story-heading">
-  <h2 id="story-heading" class="section-heading">津軽の手仕事から生まれるもの</h2>
+  <h2 id="story-heading" class="section-heading" data-i18n="story.heading">津軽の手仕事から生まれるもの</h2>
 
-  <p>こぎん刺しは、津軽の農村で生まれた実用の技です。江戸時代、この地方の農民は木綿の着物を着ることを許されず、目の粗い麻布一枚で長い冬を越さなければなりませんでした。少しでも布を丈夫に、少しでも暖かくするために、女性たちは木綿の糸で布目を埋めるように刺し続けました。</p>
+  <p data-i18n="story.p1">こぎん刺しは、津軽の農村で生まれた実用の技です。江戸時代、この地方の農民は木綿の着物を着ることを許されず、目の粗い麻布一枚で長い冬を越さなければなりませんでした。少しでも布を丈夫に、少しでも暖かくするために、女性たちは木綿の糸で布目を埋めるように刺し続けました。</p>
 
-  <p>生き延びるための手仕事が、幾何学模様の美として今に残っています。この技法は、日本三大刺し子のひとつ。ハートスポットでは、コースターや御守り、ポーチやバッグにひとつずつ刺しています。</p>
-
-  <figure class="photo">
-    <div class="photo__frame" aria-hidden="true"></div>
-    <figcaption>写真: こぎん刺しを刺している手元</figcaption>
-  </figure>
-
-  <h3 class="section-subheading">ねぶたの記憶を、日常の道具に</h3>
-  <p>もうひとつの柱が、ねぶたの絵柄をまとった生地です。ねぶたの顔をあしらった藍と白の生地。この生地をバッグや巾着に仕立てています。祭りの記憶を、日常の道具に変える仕事です。</p>
+  <p data-i18n="story.p2">生き延びるための手仕事が、幾何学模様の美として今に残っています。この技法は、日本三大刺し子のひとつ。ハートスポットでは、コースターや御守り、ポーチやバッグにひとつずつ刺しています。</p>
 
   <figure class="photo">
     <div class="photo__frame" aria-hidden="true"></div>
-    <figcaption>写真: ねぶた柄生地のバッグ</figcaption>
+    <figcaption data-i18n="story.cap1">写真: こぎん刺しを刺している手元</figcaption>
   </figure>
 
-  <h3 class="section-subheading">同じものは、ひとつとない</h3>
-  <p>一点もののピアスは、ビーズやタッセル、かぎ針編み、ガラス玉など、作り手一人ひとりが選ぶ素材と組み合わせでできています。御守りもまた、糸を選び、形を整え、一つずつ手で仕上げる一点ものです。</p>
+  <h3 class="section-subheading" data-i18n="story.sub1" data-i18n-optional>ねぶたの記憶を、日常の道具に</h3>
+  <p data-i18n="story.p3">もうひとつの柱が、ねぶたの絵柄をまとった生地です。ねぶたの顔をあしらった藍と白の生地。この生地をバッグや巾着に仕立てています。祭りの記憶を、日常の道具に変える仕事です。</p>
 
   <figure class="photo">
     <div class="photo__frame" aria-hidden="true"></div>
-    <figcaption>写真: 一点もののピアス</figcaption>
+    <figcaption data-i18n="story.cap2">写真: ねぶた柄生地のバッグ</figcaption>
   </figure>
 
-  <p>作っているのは、障害のある利用者たちです。ですがこの商品を選んでいただきたい理由は、そこではありません。津軽の伝統工芸を受け継ぐ丁寧な手仕事、一枚の布・一本の糸に向き合う時間、そこから生まれる物そのものの良さで選んでいただきたいと考えています。</p>
+  <h3 class="section-subheading" data-i18n="story.sub2" data-i18n-optional>同じものは、ひとつとない</h3>
+  <p data-i18n="story.p4">一点もののピアスは、ビーズやタッセル、かぎ針編み、ガラス玉など、作り手一人ひとりが選ぶ素材と組み合わせでできています。御守りもまた、糸を選び、形を整え、一つずつ手で仕上げる一点ものです。</p>
 
-  <p>青森の海と津軽の布、祭りの記憶と日々の手仕事。ハートスポットの商品は、その掛け合わせでできています。</p>
+  <figure class="photo">
+    <div class="photo__frame" aria-hidden="true"></div>
+    <figcaption data-i18n="story.cap3">写真: 一点もののピアス</figcaption>
+  </figure>
+
+  <p data-i18n="story.p5">作っているのは、障害のある利用者たちです。ですがこの商品を選んでいただきたい理由は、そこではありません。津軽の伝統工芸を受け継ぐ丁寧な手仕事、一枚の布・一本の糸に向き合う時間、そこから生まれる物そのものの良さで選んでいただきたいと考えています。</p>
+
+  <p data-i18n="story.p6" data-i18n-optional>青森の海と津軽の布、祭りの記憶と日々の手仕事。ハートスポットの商品は、その掛け合わせでできています。</p>
 </section>
 
 <div class="kogin-divider" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
 
 <section id="products" aria-labelledby="products-heading">
-  <h2 id="products-heading" class="section-heading">商品のご紹介</h2>
-  <p>価格が決まっている御守り・コースター・一点もののピアスは、そのままご案内できます。そのほかの商品は仕様によって価格が変わるため、下記「<a href="#buy">お求めはこちら</a>」でご確認ください。</p>
+  <h2 id="products-heading" class="section-heading" data-i18n="prod.heading">商品のご紹介</h2>
+  <p data-i18n-html="prod.lead">価格が決まっている御守り・コースター・一点もののピアスは、そのままご案内できます。そのほかの商品は仕様によって価格が変わるため、下記「<a href="#buy">お求めはこちら</a>」でご確認ください。</p>
 
-  <h3 class="section-subheading">こぎん刺し</h3>
-  <p>津軽の伝統的な刺し子技法「こぎん刺し」を、日々使える形にしています。幾何学模様は一つひとつ手刺しのため、同じ柄でも表情が異なります。</p>
+  <h3 class="section-subheading" data-i18n="prod.sub.kogin">こぎん刺し</h3>
+  <p data-i18n="prod.kogin.lead">津軽の伝統的な刺し子技法「こぎん刺し」を、日々使える形にしています。幾何学模様は一つひとつ手刺しのため、同じ柄でも表情が異なります。</p>
 
   <div class="product">
-    <h4 class="product__name">御守り</h4>
+    <h4 class="product__name" data-i18n="prod.omamori.name">御守り</h4>
     <figure class="photo">
       <div class="photo__frame" aria-hidden="true"></div>
-      <figcaption>写真: 御守り</figcaption>
+      <figcaption data-i18n="prod.omamori.cap">写真: 御守り</figcaption>
     </figure>
     <!-- 僧職表記は伎海裁定（2026-07-24）で「阿闍梨」に確定・有効化済み -->
-    <p class="product__desc">真言宗阿闍梨でもある理事長が、一体ずつ魂入れ（しんいれ）をしています。</p>
-    <p class="product__desc">糸を選び、形を整え、一つずつ手で仕上げた一点ものです。自分のお守りに、大切な人への贈り物に。</p>
-    <p class="product__price">価格：600〜700円</p>
+    <p class="product__desc" data-i18n="prod.omamori.d1">真言宗阿闍梨でもある理事長が、一体ずつ魂入れ（しんいれ）をしています。</p>
+    <p class="product__desc" data-i18n="prod.omamori.d2">糸を選び、形を整え、一つずつ手で仕上げた一点ものです。自分のお守りに、大切な人への贈り物に。</p>
+    <p class="product__price" data-i18n="prod.omamori.price">価格：600〜700円</p>
   </div>
 
   <div class="product">
-    <h4 class="product__name">コースター</h4>
+    <h4 class="product__name" data-i18n="prod.coaster.name">コースター</h4>
     <figure class="photo">
       <div class="photo__frame" aria-hidden="true"></div>
-      <figcaption>写真: コースター</figcaption>
+      <figcaption data-i18n="prod.coaster.cap">写真: コースター</figcaption>
     </figure>
-    <p class="product__desc">こぎん刺しの幾何学模様を、毎日の食卓に。手刺しのため一枚ごとに表情が異なります。</p>
-    <p class="product__price">価格：600〜700円</p>
+    <p class="product__desc" data-i18n="prod.coaster.d1">こぎん刺しの幾何学模様を、毎日の食卓に。手刺しのため一枚ごとに表情が異なります。</p>
+    <p class="product__price" data-i18n="prod.coaster.price">価格：600〜700円</p>
   </div>
 
   <div class="product">
-    <h4 class="product__name">ポーチ</h4>
+    <h4 class="product__name" data-i18n="prod.pouch.name">ポーチ</h4>
     <figure class="photo">
       <div class="photo__frame" aria-hidden="true"></div>
-      <figcaption>写真: ポーチ</figcaption>
+      <figcaption data-i18n="prod.pouch.cap">写真: ポーチ</figcaption>
     </figure>
-    <p class="product__desc">手刺しのこぎん模様をあしらった、普段使いの小物入れです。</p>
-    <p class="product__price">価格：ご相談（下記「<a href="#buy">お求めはこちら</a>」でご確認ください）</p>
+    <p class="product__desc" data-i18n="prod.pouch.d1">手刺しのこぎん模様をあしらった、普段使いの小物入れです。</p>
+    <p class="product__price" data-i18n-html="prod.pouch.price">価格：ご相談（下記「<a href="#buy">お求めはこちら</a>」でご確認ください）</p>
   </div>
 
   <div class="product">
-    <h4 class="product__name">トートバッグ</h4>
+    <h4 class="product__name" data-i18n="prod.tote.name">トートバッグ</h4>
     <figure class="photo">
       <div class="photo__frame" aria-hidden="true"></div>
-      <figcaption>写真: トートバッグ</figcaption>
+      <figcaption data-i18n="prod.tote.cap">写真: トートバッグ</figcaption>
     </figure>
-    <p class="product__desc">こぎん刺しを主役にした、使うほど手に馴染むバッグです。</p>
-    <p class="product__price">価格：ご相談（下記「<a href="#buy">お求めはこちら</a>」でご確認ください）</p>
+    <p class="product__desc" data-i18n="prod.tote.d1">こぎん刺しを主役にした、使うほど手に馴染むバッグです。</p>
+    <p class="product__price" data-i18n-html="prod.tote.price">価格：ご相談（下記「<a href="#buy">お求めはこちら</a>」でご確認ください）</p>
   </div>
 
   <div class="product">
-    <h4 class="product__name">名刺入れ</h4>
+    <h4 class="product__name" data-i18n="prod.card.name">名刺入れ</h4>
     <figure class="photo">
       <div class="photo__frame" aria-hidden="true"></div>
-      <figcaption>写真: 名刺入れ</figcaption>
+      <figcaption data-i18n="prod.card.cap">写真: 名刺入れ</figcaption>
     </figure>
-    <p class="product__desc">こぎん刺しの幾何学模様を手元に。カード入れ・普段の持ち歩きにも使えます。</p>
-    <p class="product__price">価格：ご相談（下記「<a href="#buy">お求めはこちら</a>」でご確認ください）</p>
+    <p class="product__desc" data-i18n="prod.card.d1">こぎん刺しの幾何学模様を手元に。カード入れ・普段の持ち歩きにも使えます。</p>
+    <p class="product__price" data-i18n-html="prod.card.price">価格：ご相談（下記「<a href="#buy">お求めはこちら</a>」でご確認ください）</p>
   </div>
 
-  <h3 class="section-subheading">一点もののピアス</h3>
+  <h3 class="section-subheading" data-i18n="prod.sub.pierce">一点もののピアス</h3>
   <div class="product">
     <figure class="photo">
       <div class="photo__frame" aria-hidden="true"></div>
-      <figcaption>写真: ピアス</figcaption>
+      <figcaption data-i18n="prod.pierce.cap">写真: ピアス</figcaption>
     </figure>
-    <p class="product__desc">ビーズ・タッセル・かぎ針編み・ガラス玉を組み合わせたピアスです。作り手一人ひとりが素材を選ぶため、同じものは二つとありません。</p>
-    <p class="product__price">価格：500円</p>
+    <p class="product__desc" data-i18n="prod.pierce.d1">ビーズ・タッセル・かぎ針編み・ガラス玉を組み合わせたピアスです。作り手一人ひとりが素材を選ぶため、同じものは二つとありません。</p>
+    <p class="product__price" data-i18n="prod.pierce.price">価格：500円</p>
   </div>
 
-  <h3 class="section-subheading">ねぶた柄生地のバッグ・巾着</h3>
+  <h3 class="section-subheading" data-i18n="prod.sub.nebuta">ねぶた柄生地のバッグ・巾着</h3>
   <div class="product">
     <figure class="photo">
       <div class="photo__frame" aria-hidden="true"></div>
-      <figcaption>写真: ねぶた柄トートバッグ</figcaption>
+      <figcaption data-i18n="prod.nebuta.cap">写真: ねぶた柄トートバッグ</figcaption>
     </figure>
-    <p class="product__desc">ねぶたの顔をあしらった藍と白の生地。トートバッグ・巾着・肩掛けポーチに仕立てています。青森らしさを持ち歩ける一枚です。</p>
-    <p class="product__price">価格：ご相談（下記「<a href="#buy">お求めはこちら</a>」でご確認ください）</p>
+    <p class="product__desc" data-i18n="prod.nebuta.d1">ねぶたの顔をあしらった藍と白の生地。トートバッグ・巾着・肩掛けポーチに仕立てています。青森らしさを持ち歩ける一枚です。</p>
+    <p class="product__price" data-i18n-html="prod.nebuta.price">価格：ご相談（下記「<a href="#buy">お求めはこちら</a>」でご確認ください）</p>
   </div>
 </section>
 
 <div class="kogin-divider" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
 
 <section id="order-made" aria-labelledby="order-made-heading">
-  <h2 id="order-made-heading" class="section-heading">オーダーメイドも承っています</h2>
-  <p>名前や好きなモチーフ、記念日のデザインなどを、こぎん刺しや生地に落とし込んだ、世界に一つだけの御守りや小物を作れます。大切な人への贈り物にも。</p>
+  <h2 id="order-made-heading" class="section-heading" data-i18n="order.heading">オーダーメイドも承っています</h2>
+  <p data-i18n="order.lead">名前や好きなモチーフ、記念日のデザインなどを、こぎん刺しや生地に落とし込んだ、世界に一つだけの御守りや小物を作れます。大切な人への贈り物にも。</p>
 
   <ul>
-    <li>対応例：名前・イニシャルを図案にした御守り／好きなモチーフのこぎん刺し小物／オリジナル柄のポーチ・巾着</li>
-    <li>図案から新しく起こす場合：＋2,000円</li>
-    <li>本体価格・数量・納期はご相談のうえで決めます</li>
+    <li data-i18n="order.li1">対応例：名前・イニシャルを図案にした御守り／好きなモチーフのこぎん刺し小物／オリジナル柄のポーチ・巾着</li>
+    <li data-i18n="order.li2">図案から新しく起こす場合：＋2,000円</li>
+    <li data-i18n="order.li3">本体価格・数量・納期はご相談のうえで決めます</li>
   </ul>
 
   <figure class="photo">
     <div class="photo__frame" aria-hidden="true"></div>
-    <figcaption>写真: オーダーメイドで製作した一点</figcaption>
+    <figcaption data-i18n="order.cap">写真: オーダーメイドで製作した一点</figcaption>
   </figure>
 </section>
 
 <div class="kogin-divider" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
 
 <section class="buy" id="buy" aria-labelledby="buy-heading">
-  <h2 id="buy-heading" class="section-heading">お求めはこちらから</h2>
-  <p>ハートスポットの商品は、次の3つの方法でお求めいただけます。</p>
+  <h2 id="buy-heading" class="section-heading" data-i18n="buy.heading">お求めはこちらから</h2>
+  <p data-i18n="buy.lead">ハートスポットの商品は、次の3つの方法でお求めいただけます。</p>
 
   <div class="buy-block">
-    <h3 class="buy-block__title">① このカードを置いているお店で</h3>
-    <p>現在、次のお店でお取り扱いいただいています（このカードもそのうちの一店に設置されています）。</p>
+    <h3 class="buy-block__title" data-i18n="buy.b1.title">① このカードを置いているお店で</h3>
+    <p data-i18n="buy.b1.p1">現在、次のお店でお取り扱いいただいています（このカードもそのうちの一店に設置されています）。</p>
     <!-- 設置店3店：店名の正式表記は要確認（下書き段階の表記のまま掲載）。うち「茅野茶屋のひょうたん茶屋」は「萱野茶屋」表記の可能性あり。正式表記確定後にこのリストを差し替える -->
     <ul class="store-list">
-      <li>浅虫金治郎プリン</li>
-      <li>あんてな青森</li>
+      <li data-i18n="buy.store1">浅虫金治郎プリン</li>
+      <li data-i18n="buy.store2">あんてな青森</li>
       <!-- 「茅野茶屋」の読みを「かやの」と仮定してか行に配置。読みが「ちの」なら酸ヶ湯温泉の後に移動 -->
-      <li>茅野茶屋のひょうたん茶屋</li>
-      <li>酸ヶ湯温泉</li>
-      <li>ねこおた（パサージュ広場内）</li>
-      <li>ハートスポット事業所内</li>
+      <li data-i18n="buy.store3">茅野茶屋のひょうたん茶屋</li>
+      <li data-i18n="buy.store4">酸ヶ湯温泉</li>
+      <li data-i18n="buy.store5">ねこおた（パサージュ広場内）</li>
+      <li data-i18n="buy.store6">ハートスポット事業所内</li>
     </ul>
-    <p>このカードが置かれているお店の店頭で、実際に商品をご覧いただきながらお求めいただけます。取り扱い商品は店舗によって異なります。</p>
+    <p data-i18n="buy.b1.p2">このカードが置かれているお店の店頭で、実際に商品をご覧いただきながらお求めいただけます。取り扱い商品は店舗によって異なります。</p>
   </div>
 
   <div class="buy-block">
-    <h3 class="buy-block__title">② お電話・メールでのお問い合わせ</h3>
-    <p>近くに設置店がない場合や、オーダーメイド・まとまった数のご相談は、お電話またはメールで承っています。</p>
-    <p><a class="contact-link" href="tel:0177734327">電話：017-773-4327</a></p>
-    <p><a class="contact-link" href="mailto:heartspot017@gmail.com">メール：heartspot017@gmail.com</a></p>
-    <p>InstagramのDMでもご相談いただけます（<a class="contact-link" href="https://www.instagram.com/heartspot.4327/" target="_blank" rel="noopener">@heartspot.4327</a>）</p>
-    <p>お支払いは、現金のほかキャッシュレス決済もご利用いただけます。</p>
+    <h3 class="buy-block__title" data-i18n="buy.b2.title">② お電話・メールでのお問い合わせ</h3>
+    <p data-i18n="buy.b2.p1">近くに設置店がない場合や、オーダーメイド・まとまった数のご相談は、お電話またはメールで承っています。</p>
+    <p><a class="contact-link" href="tel:0177734327" data-i18n="buy.b2.tel">電話：017-773-4327</a></p>
+    <p><a class="contact-link" href="mailto:heartspot017@gmail.com" data-i18n="buy.b2.mail">メール：heartspot017@gmail.com</a></p>
+    <p data-i18n-html="buy.b2.ig">InstagramのDMでもご相談いただけます（<a class="contact-link" href="https://www.instagram.com/heartspot.4327/" target="_blank" rel="noopener">@heartspot.4327</a>）</p>
+    <p data-i18n="buy.b2.pay">お支払いは、現金のほかキャッシュレス決済もご利用いただけます。</p>
   </div>
 
   <div class="buy-block">
-    <h3 class="buy-block__title">③ オンライン販売・ふるさと納税（準備中）</h3>
-    <p>オンラインでのご購入、ふるさと納税の返礼品としての展開は現在準備中です。開始のご案内をご希望の方は、上記の電話・メールまでお問い合わせください。</p>
+    <h3 class="buy-block__title" data-i18n="buy.b3.title">③ オンライン販売・ふるさと納税（準備中）</h3>
+    <p data-i18n="buy.b3.p1">オンラインでのご購入、ふるさと納税の返礼品としての展開は現在準備中です。開始のご案内をご希望の方は、上記の電話・メールまでお問い合わせください。</p>
   </div>
 </section>
 
 <div class="kogin-divider" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
 
 <footer class="about" id="about" aria-labelledby="about-heading">
-  <h2 id="about-heading" class="section-heading">ハートスポットについて</h2>
-  <p>ハートスポットは、青森県青森市浜田にある地域の作業所です。津軽の伝統工芸であるこぎん刺しや、ねぶたの絵柄をまとった生地を使い、一つひとつの商品を手仕事で仕立てています。</p>
+  <h2 id="about-heading" class="section-heading" data-i18n="about.heading">ハートスポットについて</h2>
+  <p data-i18n="about.p1">ハートスポットは、青森県青森市浜田にある地域の作業所です。津軽の伝統工芸であるこぎん刺しや、ねぶたの絵柄をまとった生地を使い、一つひとつの商品を手仕事で仕立てています。</p>
 
   <address class="about__contact">
-    <p class="about__org">ハートスポット</p>
-    <p>所在地：青森県青森市浜田豊田368 コーポ福井</p>
-    <p><a class="contact-link" href="tel:0177734327">電話：017-773-4327</a></p>
-    <p><a class="contact-link" href="mailto:heartspot017@gmail.com">メール：heartspot017@gmail.com</a></p>
-    <p><a class="contact-link" href="https://www.instagram.com/heartspot.4327/" target="_blank" rel="noopener">Instagram：@heartspot.4327</a></p>
+    <p class="about__org" data-i18n="about.org">ハートスポット</p>
+    <p data-i18n="about.addr">所在地：青森県青森市浜田豊田368 コーポ福井</p>
+    <p><a class="contact-link" href="tel:0177734327" data-i18n="about.tel">電話：017-773-4327</a></p>
+    <p><a class="contact-link" href="mailto:heartspot017@gmail.com" data-i18n="about.mail">メール：heartspot017@gmail.com</a></p>
+    <p><a class="contact-link" href="https://www.instagram.com/heartspot.4327/" target="_blank" rel="noopener" data-i18n="about.ig">Instagram：@heartspot.4327</a></p>
   </address>
 </footer>
 
@@ -573,6 +645,160 @@
     var el = document.getElementById(id);
     if(el) io.observe(el);
   });
+})();
+</script>
+<script>
+/* ================================================================
+   多言語切替（i18n）機構 — 2026-08-06
+   ・日本語は「HTMLに書かれている文面そのもの」が正本。JS側にja辞書は持たず、
+     起動時にDOMから吸い上げる（＝辞書とHTMLの二重管理をしない／日本語表示は絶対にズレない）
+   ・翻訳の追加は下の I18N.en / I18N.zh にキーを足すだけ。
+   ・対訳が無いキーは日本語のまま表示（虫食い防止）。未訳キーはコンソールに一覧が出る。
+     流し込み担当は DevTools で i18nSkeleton('en') を実行すると、未訳キー＋日本語原文の
+     雛形JSONが出るのでそれを埋める。
+   ・data-i18n         … textContent を差し替え
+     data-i18n-html    … innerHTML を差し替え（リンクを含む文で使用）
+     data-i18n-optional… その言語に対訳が無い場合、日本語で出さずに要素ごと隠す
+                         （物語セクションのように原文と対訳で段落構成が違う箇所だけに使う）
+   ・?lang=en / ?lang=zh をURLに付けると直接その言語で開ける（選択はlocalStorageに保存）
+   ================================================================ */
+(function(){
+  'use strict';
+
+  var HTML_LANG = { ja:'ja', en:'en', zh:'zh-Hant' };
+  var STORE_KEY = 'hs-catalog-lang';
+
+  /* ---- 翻訳辞書（ja は起動時にDOMから自動取得するため空でよい） ----
+     物語セクションの en / zh は ops/notes/kogin-intro-3lang-20260806.md が正本。
+     原文（docx）を一字一句変えていない。編集する場合は正本→ここの順で直すこと。 */
+  var I18N = {
+    ja: {},
+    en: {
+      'story.heading': 'Kogin-zashi \u2013 A Tradition Stitched with the Spirit of Aomori',
+      'story.p1': 'Kogin-zashi is a traditional embroidery technique born in Aomori, one of the snowiest regions in Japan. For generations, people here faced long, harsh winters with creativity, patience, and resilience. By carefully stitching cotton thread onto hemp fabric, they made their clothing warmer, stronger, and longer-lasting.',
+      'story.p2': 'Over time, this practical wisdom became a beautiful cultural tradition. Today, Kogin-zashi is admired not only for its intricate geometric patterns, but also for the spirit of care, perseverance, and craftsmanship woven into every stitch.',
+      'story.p3': 'At Heart Spot, our artisans with disabilities proudly continue this tradition by creating each piece entirely by hand. No two works are exactly alike\u2014every item is unique, reflecting the personality, dedication, and warmth of its maker.',
+      'story.p4': 'When you take home a piece of Kogin-zashi, you are bringing home more than a handcrafted souvenir. You are carrying with you the story of Aomori, the beauty of Japanese craftsmanship, and the hopes of the people who continue this tradition for future generations.',
+      'story.p5': 'Thank you for helping us preserve a living tradition\u2014one stitch, one story, and one heart at a time.'
+    },
+    zh: {
+      'story.heading': '津輕小巾刺——承載青森溫暖與智慧的傳統工藝',
+      'story.p1': '津輕小巾刺（Kogin-zashi）誕生於日本青森縣。這片土地冬季漫長、白雪覆蓋，當地人世世代代憑藉著智慧、耐心與堅韌，創造出這項獨特的刺繡技藝。',
+      'story.p2': '人們將棉線一針一線地繡在麻布上，使布料更加保暖、耐用，也讓平凡的布料展現出精緻而富有美感的幾何圖案。隨著時代演進，小巾刺已不只是生活用品，更成為青森最具代表性的傳統工藝之一。',
+      'story.p3': '在 Heart Spot，身心障礙的創作者們懷抱著對傳統文化的熱愛，細心完成每一件作品。每一針、每一線，都蘊含著製作者的用心，因此世界上沒有兩件完全相同的作品。',
+      'story.p4': '當您帶回一件小巾刺作品時，不只是帶回一份旅行紀念，更帶回了青森的文化、人與人之間的溫暖，以及這份珍貴的手工技藝。',
+      'story.p5': '感謝您與我們一起，讓這份美好的傳統繼續傳承下去。'
+    }
+  };
+
+  /* ---- 差し替え対象の収集。同時に日本語（既定表示）を控える ---- */
+  var nodes = [];
+  function push(key, get, set, optional){
+    if(I18N.ja[key] === undefined) I18N.ja[key] = get();
+    nodes.push({ key:key, get:get, set:set, optional:!!optional });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-i18n],[data-i18n-html]'), function(el){
+    var isHtml = el.hasAttribute('data-i18n-html');
+    var key = el.getAttribute(isHtml ? 'data-i18n-html' : 'data-i18n');
+    push(key,
+      function(){ return isHtml ? el.innerHTML : el.textContent; },
+      function(v, hide){
+        el.hidden = !!hide;
+        if(hide) return;
+        if(isHtml){ if(el.innerHTML !== v) el.innerHTML = v; }
+        else if(el.textContent !== v){ el.textContent = v; }
+      },
+      el.hasAttribute('data-i18n-optional'));
+  });
+  var metaDesc = document.querySelector('meta[name="description"]');
+  push('meta.title', function(){ return document.title; }, function(v){ document.title = v; });
+  if(metaDesc){
+    push('meta.description',
+      function(){ return metaDesc.getAttribute('content'); },
+      function(v){ metaDesc.setAttribute('content', v); });
+  }
+
+  /* ---- 未訳キーの検出（流し込み漏れ検出用）。キーは重複を除いて数える ---- */
+  function scan(lang){
+    var dict = I18N[lang] || {}, r = { missing:[], hidden:[], keys:[] };
+    nodes.forEach(function(n){
+      if(r.keys.indexOf(n.key) < 0) r.keys.push(n.key); else return;
+      var v = dict[n.key];
+      if(v === undefined || v === null || v === '') (n.optional ? r.hidden : r.missing).push(n.key);
+    });
+    return r;
+  }
+  function report(lang){
+    if(lang === 'ja'){
+      console.info('[i18n] 日本語（既定表示・DOM無変更）／未訳キー: en ' + scan('en').missing.length
+        + ' 件, zh ' + scan('zh').missing.length + ' 件（対象 ' + scan('ja').keys.length + ' キー）');
+      return;
+    }
+    var r = scan(lang), total = r.keys.length, done = total - r.missing.length - r.hidden.length;
+    if(!r.missing.length){
+      console.info('[i18n] ' + lang + ': 未訳キー 0 件（翻訳済 ' + done + ' / 対象 ' + total + '）');
+    }else{
+      console.warn('[i18n] ' + lang + ': 未訳 ' + r.missing.length + ' 件は日本語で表示中'
+        + '（翻訳済 ' + done + ' / 対象 ' + total + '・意図的な非表示 ' + r.hidden.length + ' 件）');
+      console.warn('[i18n] ' + lang + ' 未訳キー一覧: ' + r.missing.join(', '));
+    }
+  }
+  /* DevTools用ヘルパ: 未訳キー＋日本語原文の雛形を出す */
+  window.i18nSkeleton = function(lang){
+    var out = {};
+    scan(lang || 'en').missing.forEach(function(k){ out[k] = I18N.ja[k]; });
+    console.log(JSON.stringify(out, null, 2));
+    return out;
+  };
+  window.i18nStatus = function(){
+    return { keys:scan('ja').keys.length, nodes:nodes.length, en:scan('en'), zh:scan('zh') };
+  };
+
+  /* ---- 適用 ---- */
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.langbar__btn'));
+  var current = null;
+  function apply(lang, silent){
+    if(!HTML_LANG[lang]) lang = 'ja';
+    var dict = I18N[lang] || {};
+    nodes.forEach(function(n){
+      var v = dict[n.key];
+      if(v === undefined || v === null || v === ''){
+        if(n.optional && lang !== 'ja'){ n.set('', true); return; }
+        v = I18N.ja[n.key];            /* 未訳は日本語のまま出す */
+      }
+      n.set(v, false);
+    });
+    document.documentElement.lang = HTML_LANG[lang];
+    buttons.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.lang === lang)); });
+    current = lang;
+    if(!silent) report(lang);
+  }
+
+  function store(v){ try{ localStorage.setItem(STORE_KEY, v); }catch(e){} }
+  function load(){ try{ return localStorage.getItem(STORE_KEY); }catch(e){ return null; } }
+
+  buttons.forEach(function(b){
+    b.addEventListener('click', function(){
+      var lang = b.dataset.lang;
+      if(lang === current) return;
+      store(lang);
+      apply(lang);
+    });
+  });
+
+  /* ---- 起動 ---- */
+  var q = null;
+  try{ q = new URLSearchParams(location.search).get('lang'); }catch(e){}
+  var initial = HTML_LANG[q] ? q : (HTML_LANG[load()] ? load() : 'ja');
+  if(q && HTML_LANG[q]) store(q);
+  if(initial === 'ja'){
+    /* 既定（日本語）はDOMを一切書き換えない＝改修前と1pxも変わらないことを保証する */
+    buttons.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.lang === 'ja')); });
+    current = 'ja';
+    report('ja');
+  }else{
+    apply(initial);
+  }
 })();
 </script>
 </body>
