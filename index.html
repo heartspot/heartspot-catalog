@@ -444,7 +444,8 @@
 <div class="kogin-divider" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
 
 <!-- 多言語: このセクションだけ JA と EN/ZH で構成が違う（対訳md 5章「C案」＝伎海決定 2026-08-06）。
-     JA = 現行のまま無傷。EN/ZH = docx正本ブロック＋fresh訳2文を先頭に出し、p1/p2/p5 を落とす。
+     JA = 現行のまま無傷。EN/ZH = fresh訳2文＋docx正本ブロックを先頭に出し、p1/p2/p5 を落とす。
+     ※ fresh訳2文はdocxブロックの「前」（伎海裁定 2026-08-07・decisions記録済み）。
      どの要素がどの言語で出るかは data-lang-only 属性を見ること。 -->
 <section id="story" aria-labelledby="story-heading">
   <h2 id="story-heading" class="section-heading" data-i18n="story.heading">津軽の手仕事から生まれるもの</h2>
@@ -452,12 +453,23 @@
   <!-- ============================================================
        EN/ZH専用ブロック（対訳md 5章「C案」＝伎海決定 2026-08-06）
        ・JAページでは hidden 属性で非表示＝日本語表示は一切変わらない
-       ・EN/ZHでは h2 → docx正本ブロック → fresh訳2文 → 写真 …の順で読ませる
+       ・EN/ZHでは h2 → fresh訳2文（江戸期の史実）→ docx正本ブロック → 写真 …の順で読ませる
+         （2026-08-07 伎海裁定でfresh訳をdocxの前へ移動＝歴史→物語→結びの感謝、で終わる流れ）
        ・index.html由来の p1/p2（起源・幾何学模様の美）はdocxと重複するため
          EN/ZHでは非表示（data-lang-only="ja"）
        ・p5（「選んでいただきたい理由はそこではありません」）もEN/ZHでは非表示。
          英中の「障がいのある作り手」メッセージはdocx para3（誇り前面）に一本化する
        ============================================================ -->
+  <!-- docxに無い要素（江戸時代の史実・日本三大刺し子・Heart Spotの製作物）を補うfresh訳。
+       文言は対訳md 5章 手順10のEN/ZH確定文。docx正本ブロックの「前」に置き、歴史→物語の順で読ませる
+       （伎海裁定 2026-08-07・decisions記録済み。旧構成では docx の結び（感謝）の直後にあった）。
+       移動に伴い、先行文脈を失った指示語・副詞だけを調整（内容の追加・削除は無し）:
+         EN "farmers in this region" → "farmers in the Tsugaru region of Aomori"
+            "Kogin-zashi is also counted" → "Kogin-zashi is counted"
+         ZH 「這片土地上的農民」→「津輕地區的農民」／「小巾刺也是」→「小巾刺是」 -->
+  <p data-lang-only="en" hidden>During the Edo period, farmers in the Tsugaru region of Aomori were forbidden from wearing cotton kimono, and had to survive the long winters wrapped in nothing but a single layer of coarse hemp cloth. Kogin-zashi is counted among Japan's three great sashiko embroidery traditions, and at Heart Spot we stitch it — one piece at a time — into coasters, pouches, bags, and Omamori, a traditional Japanese protective charm.</p>
+  <p data-lang-only="zh" hidden>江戶時代，津輕地區的農民被禁止穿著棉製和服，只能靠著一件織眼粗疏的麻布，撐過漫長的寒冬。小巾刺是日本三大刺子繡之一，在 Heart Spot，我們將它一針一針地繡進杯墊、小物包、提袋，以及御守（日式護身符）之中。</p>
+
   <!-- docx正本 verbatim / 編集禁止 -->
   <!-- 出典: ops/notes/kogin-intro-3lang-20260806.md（正本 G:\マイドライブ\こぎん刺し紹介文章.docx）。
        誤字修正・自然化を含め、いかなる理由でもこのブロック内のテキストを編集しないこと。順序も不変。 -->
@@ -478,10 +490,6 @@
     <p>感謝您與我們一起，讓這份美好的傳統繼續傳承下去。</p>
   </div>
   <!-- /docx正本 -->
-  <!-- docxに無い要素（江戸時代の史実・日本三大刺し子・Heart Spotの製作物）を補うfresh訳。
-       文言は対訳md 5章 手順10のEN/ZH確定文。 -->
-  <p data-lang-only="en" hidden>During the Edo period, farmers in this region were forbidden from wearing cotton kimono, and had to survive the long winters wrapped in nothing but a single layer of coarse hemp cloth. Kogin-zashi is also counted among Japan's three great sashiko embroidery traditions, and at Heart Spot we stitch it — one piece at a time — into coasters, pouches, bags, and Omamori, a traditional Japanese protective charm.</p>
-  <p data-lang-only="zh" hidden>江戶時代，這片土地上的農民被禁止穿著棉製和服，只能靠著一件織眼粗疏的麻布，撐過漫長的寒冬。小巾刺也是日本三大刺子繡之一，在 Heart Spot，我們將它一針一針地繡進杯墊、小物包、提袋，以及御守（日式護身符）之中。</p>
   <p data-i18n="story.p1" data-lang-only="ja">こぎん刺しは、津軽の農村で生まれた実用の技です。江戸時代、この地方の農民は木綿の着物を着ることを許されず、目の粗い麻布一枚で長い冬を越さなければなりませんでした。少しでも布を丈夫に、少しでも暖かくするために、女性たちは木綿の糸で布目を埋めるように刺し続けました。</p>
 
   <p data-i18n="story.p2" data-lang-only="ja">生き延びるための手仕事が、幾何学模様の美として今に残っています。この技法は、日本三大刺し子のひとつ。ハートスポットでは、コースターや御守り、ポーチやバッグにひとつずつ刺しています。</p>
