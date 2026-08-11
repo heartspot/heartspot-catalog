@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--
+  ハートスポット公式HP「お知らせ」
+  news.json を掲載開始日/終了日で振り分けて描画（assets/js/news.js）。
+  成果物ID: HEART-016 実装 / 2026-08-12
+-->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#1E3350">
+<title>お知らせ｜ハートスポット（就労継続支援B型・青森市浜田）</title>
+<meta name="description" content="ハートスポットのイベント出店・茶話会などの最新のお知らせです。掲載期間を過ぎたものは自動的に過去のお知らせに移動します。">
+<link rel="canonical" href="https://heartspot.github.io/heartspot-catalog/home/news.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="お知らせ｜ハートスポット（就労継続支援B型・青森市浜田）">
+<meta property="og:description" content="ハートスポットのイベント出店・茶話会などの最新のお知らせです。">
+<meta property="og:url" content="https://heartspot.github.io/heartspot-catalog/home/news.html">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+
+<header class="site-header">
+  <div class="site-header__bar">
+    <a class="site-header__brand" href="index.html">
+      <span class="site-header__brand-main">ハートスポット</span>
+      <span class="site-header__brand-sub">青森市浜田・就労継続支援B型事業所</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="nav-toggle__box"><span></span></span>
+      メニュー
+    </button>
+  </div>
+  <nav id="site-nav" class="site-nav" aria-label="サイト全体のメニュー">
+    <ul>
+      <li><a href="index.html">トップ</a></li>
+      <li><a href="about.html">ハートスポットについて</a></li>
+      <li><a href="products.html">商品紹介</a></li>
+      <li><a href="info.html">利用案内</a></li>
+      <li><a href="news.html" aria-current="page">お知らせ</a></li>
+      <li><a href="access.html">アクセス・お問い合わせ</a></li>
+      <li class="site-nav__external"><a href="../index.html">商品カタログ<span class="site-nav__external-mark" aria-hidden="true">↗ 別サイト</span></a></li>
+      <li class="site-nav__external"><a href="https://kinnikumagonote.github.io/" target="_blank" rel="noopener">きんまごの手<span class="site-nav__external-mark" aria-hidden="true">↗ 外部サイト</span></a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+<section id="news" aria-labelledby="news-heading">
+  <h1 id="news-heading">お知らせ</h1>
+  <p>イベント出店や茶話会など、ハートスポットからの最新情報です。</p>
+
+  <ul class="news-list" id="news-current"></ul>
+  <p id="news-empty" hidden>現在、掲載中のお知らせはありません。</p>
+
+  <details class="news-past" id="news-past" hidden>
+    <summary>過去のお知らせ</summary>
+    <ul class="news-list" id="news-past-list"></ul>
+  </details>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p>特定非営利活動法人ハートスポット（就労継続支援B型事業所）</p>
+    <address>
+      <p>〒030-0843 青森市浜田字豊田368｜TEL・FAX：<a href="tel:0177734327">017-773-4327</a></p>
+    </address>
+    <div class="site-footer__links">
+      <a href="../index.html">商品カタログ（別サイト）</a>
+      <a href="https://kinnikumagonote.github.io/" target="_blank" rel="noopener">きんまごの手（外部サイト）</a>
+      <a href="access.html">アクセス・お問い合わせ</a>
+    </div>
+    <p class="site-footer__copyright">&copy; 2026 ハートスポット</p>
+  </div>
+</footer>
+
+<script src="assets/js/nav.js"></script>
+<script src="assets/js/news.js"></script>
+</body>
+</html>
