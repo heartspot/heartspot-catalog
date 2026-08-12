@@ -35,7 +35,10 @@
     return li;
   }
 
-  fetch('news.json')
+  // ?t= は1分刻みのキャッシュ回避。職員が投稿フォームから更新した内容が
+  // GitHub Pages のCDNキャッシュ（既定10分）で最大10分見えない問題を防ぐ。
+  // 1分単位なので同一分内のアクセスはキャッシュが効き、負荷は増えない。
+  fetch('news.json?t=' + Math.floor(Date.now() / 60000))
     .then(function (r) {
       if (!r.ok) throw new Error('news.json HTTP ' + r.status);
       return r.json();
