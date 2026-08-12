@@ -3,6 +3,8 @@
   ハートスポット公式HP「アクセス・お問い合わせ」
   文面/画像の出典: 現行 heartspot.jp（ペライチ）から回収・再構成。伎海裁定(2026-08-12)。
   お問い合わせ導線はInstagram DMとTELの2本（伎海裁定・LINEは運用未確認のため掲載しない）。
+  2026-08-12 追記: お問い合わせフォーム（heartspot.vercel.app/contact.html）を主導線として追加。
+  フォームの実装は別リポ C:\dev\heartspot-form（api/contact.js + contact.html・メール送信型）。
   成果物ID: HEART-016 実装 / 2026-08-12
 -->
 <html lang="ja">
@@ -12,7 +14,7 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="theme-color" content="#1E3350">
 <title>アクセス・お問い合わせ｜ハートスポット（青森市浜田）</title>
-<meta name="description" content="ハートスポットの所在地は青森市浜田字豊田368（サンワドー中央店1号館向い）。お問い合わせはInstagram DM（@heartspot.4327）またはお電話017-773-4327まで。提携サービス「きんにくまごの手」もご案内しています。">
+<meta name="description" content="ハートスポットの所在地は青森市浜田字豊田368（サンワドー中央店1号館向い）。お問い合わせはフォーム（24時間受付）・Instagram DM（@heartspot.4327）・お電話017-773-4327から。提携サービス「きんにくまごの手」もご案内しています。">
 <link rel="canonical" href="https://heartspot.github.io/heartspot-catalog/home/access.html">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
@@ -73,8 +75,9 @@
 
 <section id="contact" aria-labelledby="contact-heading">
   <h2 id="contact-heading">お問い合わせ</h2>
-  <p>ご質問・見学のお申し込みは、InstagramのDMまたはお電話でお気軽にお問い合わせください。</p>
+  <p>ご質問・見学のお申し込みは、お問い合わせフォーム・InstagramのDM・お電話のいずれでも受け付けています。フォームは24時間お送りいただけます（お返事は営業日にいたします）。</p>
   <div class="contact-grid">
+    <a class="contact-btn contact-btn--wide" href="https://heartspot.vercel.app/contact.html">お問い合わせフォーム（24時間受付）</a>
     <a class="contact-btn contact-btn--insta" href="https://www.instagram.com/heartspot.4327/" target="_blank" rel="noopener">Instagram DM：@heartspot.4327<span aria-hidden="true"> ↗</span></a>
     <a class="contact-btn" href="tel:0177734327">電話：017-773-4327</a>
   </div>

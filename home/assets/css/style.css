@@ -242,6 +242,7 @@ address{ font-style:normal; }
   font-weight:700; font-size:.95rem; padding:.9rem 1rem; border-radius:3px;
 }
 .contact-btn:hover{ background:var(--color-navy-deep); color:#fff; }
+.contact-btn--wide{ grid-column:1 / -1; } /* 2列レイアウトでも1本で横いっぱい（主導線＝問い合わせフォーム） */
 .contact-btn--insta{ background:#b23a6e; }
 .contact-btn--insta:hover{ background:#8f2e58; }
 
