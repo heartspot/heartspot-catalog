@@ -263,4 +263,5 @@ address{ font-style:normal; }
 .site-footer p{ margin:0 0 .5rem; font-size:.85rem; }
 .site-footer__links{ display:flex; flex-wrap:wrap; gap:.4rem 1rem; margin-top:.8rem; }
 .site-footer__links a{ color:#EFE9DA; text-decoration:underline; font-size:.85rem; }
+.site-footer address a{ color:#EFE9DA; text-decoration:underline; }
 .site-footer__copyright{ opacity:.7; font-size:.75rem; margin-top:1rem; }
