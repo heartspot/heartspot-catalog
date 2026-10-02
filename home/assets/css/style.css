@@ -224,7 +224,7 @@ details.faq p{ margin:.5rem 0 0 1.6em; font-size:.92rem; }
 .news-item:first-child{ border-top:none; }
 .news-item__date{ font-size:.8rem; color:var(--color-muted); margin:0 0 .3rem; }
 .news-item__title{ font-weight:700; margin:0 0 .3rem; }
-.news-item__body{ font-size:.9rem; margin:0; }
+.news-item__body{ font-size:.9rem; margin:0; white-space:pre-line; }
 #news-empty{ color:var(--color-muted); font-size:.9rem; }
 details.news-past{ margin-top:1.2rem; }
 details.news-past summary{ cursor:pointer; font-weight:700; color:var(--color-navy); padding:.5rem 0; min-height:44px; display:flex; align-items:center; }

@@ -18,7 +18,7 @@
 
     var date = document.createElement('p');
     date.className = 'news-item__date';
-    date.textContent = formatDate(it.start) + (it.end ? '〜' + formatDate(it.end) : '');
+    date.textContent = formatDate(it.start);
     li.appendChild(date);
 
     var title = document.createElement('p');
