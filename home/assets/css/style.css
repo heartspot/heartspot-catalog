@@ -1,7 +1,5 @@
 /*
   ハートスポット公式HP 共通スタイル
-  文面/画像の出典: 現行 heartspot.jp（ペライチ）からの再構築＋伎海裁定(2026-08-12)
-  成果物ID: HEART-016 実装 / 2026-08-12
   設計: モバイルファースト。全ページ共通ヘッダー(.site-header)/フッター(.site-footer)を
         各HTMLに複製して使う（ビルドシステム無しの静的サイトのため）。
 */
@@ -245,6 +243,7 @@ address{ font-style:normal; }
 .contact-btn--wide{ grid-column:1 / -1; } /* 2列レイアウトでも1本で横いっぱい（主導線＝問い合わせフォーム） */
 .contact-btn--insta{ background:#b23a6e; }
 .contact-btn--insta:hover{ background:#8f2e58; }
+.contact-btn--tel{ font-size:1.35rem; min-height:64px; letter-spacing:.04em; } /* 電話番号を大きく見せる（草木染めワークショップのご予約） */
 
 .partner-card{
   background:var(--color-bg-panel); border:1px solid var(--color-line);
