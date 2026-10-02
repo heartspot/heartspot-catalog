@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <!--
   ハートスポット 消費者向けWebカタログ（index.html）
-  文面正本: yumenaminomachi-v2/ops/notes/heartspot-catalog-consumer-2026-07-23.md（v2）
   成果物ID: HEART-015 実装 / 2026-07-24
 
   写真プレースホルダの差し替え方法:
@@ -257,7 +256,7 @@
   .about__contact p{ margin-bottom:.4rem; }
 
   /* ================================================================
-     PC用サイドナビ（2026-07-31・伎海案「左に固定メニュー」）
+     PC用サイドナビ（2026-07-31）
      ページが1万px近くあり、スクロールで現在地を見失う。
      左の余白に固定ナビを置いて、余白の解消と回遊性を同時に取る。
      モバイルには一切出さない（既存のインラインnavがそのまま働く）。
@@ -367,7 +366,6 @@
      .kogin-divider 等 display 指定のある要素にも効くよう !important を付ける */
   [hidden]{ display:none !important; }
 
-  /* docx正本ブロックの太字タグライン（EN/ZHのみ表示） */
   .story__lead{
     font-family:"游明朝","Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
     color:var(--color-navy);
@@ -423,9 +421,6 @@
   </figure>
   <div class="hero__body">
     <h1 class="hero__catch" data-i18n-html="hero.catch">一枚の布に、<br>手仕事の時間を。</h1>
-    <!-- 案2（不採用・保留／最終選定は伎海。採用する場合は下のhero__leadの文章をこちらに差し替える）:
-    青森市浜田の作業所「ハートスポット」が、津軽の手仕事をひとつずつ形にしています。
-    -->
     <p class="hero__lead" data-i18n="hero.lead">津軽の手仕事を、青森市浜田の作業所「ハートスポット」がひとつずつ形にしています。</p>
     <p class="hero__guide" data-i18n="hero.guide">このページでは、こぎん刺し・ねぶた柄の小物・一点もののアクセサリーをご紹介しています。</p>
     <a class="hero__cta" href="#products" data-i18n="hero.cta">商品を見る ↓</a>
@@ -451,36 +446,12 @@
   </figure>
 </section>
 
-<!-- 多言語: このセクションだけ JA と EN/ZH で構成が違う（対訳md 5章「C案」＝伎海決定 2026-08-06）。
-     JA = 現行のまま無傷。EN/ZH = fresh訳2文＋docx正本ブロックを先頭に出し、p1/p2/p5 を落とす。
-     ※ fresh訳2文はdocxブロックの「前」（伎海裁定 2026-08-07・decisions記録済み）。
-     どの要素がどの言語で出るかは data-lang-only 属性を見ること。 -->
 <section id="story" aria-labelledby="story-heading">
   <h2 id="story-heading" class="section-heading" data-i18n="story.heading">津軽の手仕事から生まれるもの</h2>
 
-  <!-- ============================================================
-       EN/ZH専用ブロック（対訳md 5章「C案」＝伎海決定 2026-08-06）
-       ・JAページでは hidden 属性で非表示＝日本語表示は一切変わらない
-       ・EN/ZHでは h2 → fresh訳2文（江戸期の史実）→ docx正本ブロック → 写真 …の順で読ませる
-         （2026-08-07 伎海裁定でfresh訳をdocxの前へ移動＝歴史→物語→結びの感謝、で終わる流れ）
-       ・index.html由来の p1/p2（起源・幾何学模様の美）はdocxと重複するため
-         EN/ZHでは非表示（data-lang-only="ja"）
-       ・p5（「選んでいただきたい理由はそこではありません」）もEN/ZHでは非表示。
-         英中の「障がいのある作り手」メッセージはdocx para3（誇り前面）に一本化する
-       ============================================================ -->
-  <!-- docxに無い要素（江戸時代の史実・日本三大刺し子・Heart Spotの製作物）を補うfresh訳。
-       文言は対訳md 5章 手順10のEN/ZH確定文。docx正本ブロックの「前」に置き、歴史→物語の順で読ませる
-       （伎海裁定 2026-08-07・decisions記録済み。旧構成では docx の結び（感謝）の直後にあった）。
-       移動に伴い、先行文脈を失った指示語・副詞だけを調整（内容の追加・削除は無し）:
-         EN "farmers in this region" → "farmers in the Tsugaru region of Aomori"
-            "Kogin-zashi is also counted" → "Kogin-zashi is counted"
-         ZH 「這片土地上的農民」→「津輕地區的農民」／「小巾刺也是」→「小巾刺是」 -->
   <p data-lang-only="en" hidden>During the Edo period, farmers in the Tsugaru region of Aomori were forbidden from wearing cotton kimono, and had to survive the long winters wrapped in nothing but a single layer of coarse hemp cloth. Kogin-zashi is counted among Japan's three great sashiko embroidery traditions, and at Heart Spot we stitch it — one piece at a time — into coasters, pouches, bags, and Omamori, a traditional Japanese protective charm.</p>
   <p data-lang-only="zh" hidden>江戶時代，津輕地區的農民被禁止穿著棉製和服，只能靠著一件織眼粗疏的麻布，撐過漫長的寒冬。小巾刺是日本三大刺子繡之一，在 Heart Spot，我們將它一針一針地繡進杯墊、小物包、提袋，以及御守（日式護身符）之中。</p>
 
-  <!-- docx正本 verbatim / 編集禁止 -->
-  <!-- 出典: ops/notes/kogin-intro-3lang-20260806.md（正本 G:\マイドライブ\こぎん刺し紹介文章.docx）。
-       誤字修正・自然化を含め、いかなる理由でもこのブロック内のテキストを編集しないこと。順序も不変。 -->
   <div class="story__docx" data-lang-only="en" hidden>
     <p class="story__lead"><strong>Kogin-zashi – A Tradition Stitched with the Spirit of Aomori</strong></p>
     <p>Kogin-zashi is a traditional embroidery technique born in Aomori, one of the snowiest regions in Japan. For generations, people here faced long, harsh winters with creativity, patience, and resilience. By carefully stitching cotton thread onto hemp fabric, they made their clothing warmer, stronger, and longer-lasting.</p>
@@ -497,7 +468,6 @@
     <p>當您帶回一件小巾刺作品時，不只是帶回一份旅行紀念，更帶回了青森的文化、人與人之間的溫暖，以及這份珍貴的手工技藝。</p>
     <p>感謝您與我們一起，讓這份美好的傳統繼續傳承下去。</p>
   </div>
-  <!-- /docx正本 -->
   <p data-i18n="story.p1" data-lang-only="ja">こぎん刺しは、津軽の農村で生まれた実用の技です。江戸時代、この地方の農民は木綿の着物を着ることを許されず、目の粗い麻布一枚で長い冬を越さなければなりませんでした。少しでも布を丈夫に、少しでも暖かくするために、女性たちは木綿の糸で布目を埋めるように刺し続けました。</p>
 
   <p data-i18n="story.p2" data-lang-only="ja">生き延びるための手仕事が、幾何学模様の美として今に残っています。この技法は、日本三大刺し子のひとつ。ハートスポットでは、コースターや御守り、ポーチやバッグにひとつずつ刺しています。</p>
@@ -540,7 +510,6 @@
     <figure class="photo">
       <img class="photo__frame" src="images/prod-omamori.jpg" alt="こぎん刺しの御守り">
     </figure>
-    <!-- 僧職表記は伎海裁定（2026-07-24）で「阿闍梨」に確定・有効化済み -->
     <p class="product__desc" data-i18n="prod.omamori.d1">真言宗阿闍梨でもある理事長が、一体ずつ魂入れ（しんいれ）をしています。</p>
     <p class="product__desc" data-i18n="prod.omamori.d2">糸を選び、形を整え、一つずつ手で仕上げた一点ものです。自分のお守りに、大切な人への贈り物に。</p>
     <p class="product__price" data-i18n="prod.omamori.price">価格：700円</p>
@@ -636,7 +605,6 @@
   <div class="buy-block">
     <h3 class="buy-block__title" data-i18n="buy.b1.title">① このカードを置いているお店で</h3>
     <p data-i18n="buy.b1.p1">現在、次のお店でお取り扱いいただいています（このカードもそのうちの一店に設置されています）。</p>
-    <!-- 設置店3店：店名の正式表記は要確認（下書き段階の表記のまま掲載）。うち「茅野茶屋のひょうたん茶屋」は「萱野茶屋」表記の可能性あり。正式表記確定後にこのリストを差し替える -->
     <ul class="store-list">
       <li data-i18n="buy.store1">浅虫金治郎プリン</li>
       <li data-i18n="buy.store2">あんてな青森</li>
@@ -729,13 +697,6 @@
   var HTML_LANG = { ja:'ja', en:'en', zh:'zh-Hant' };
   var STORE_KEY = 'hs-catalog-lang';
 
-  /* ---- 翻訳辞書（ja は起動時にDOMから自動取得するため空でよい） ----
-     正本: ops/notes/heartspot-catalog-i18n-honyaku-20260806.md の1章 対訳表（reviewer 2周PASS・2026-08-06）。
-     対訳mdの表から機械抽出して流し込んでいる＝手打ち転記していない。訳を直す時は必ず正本→ここの順で直すこと。
-     価格・電話番号・住所・店名は対訳md 0章のルールにより原文（日本語）のまま3言語共通。
-     story.p1 / story.p2 / story.p5 の訳は保持しているが、C案（伎海決定 2026-08-06）により
-     EN/ZHでは非表示（data-lang-only="ja"）＝画面には出ない。将来構成を変える時のために残してある。
-     物語セクションのdocx正本文（lead+para1〜5）はこの辞書ではなくHTML側に verbatim で置いてある。 */
   var I18N = {
     ja: {},
     en: {
