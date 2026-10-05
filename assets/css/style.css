@@ -139,6 +139,9 @@ section:first-child{ border-top:none; padding-top:1.6rem; }
 .btn:hover{ background:var(--color-navy-deep); color:#fff; }
 .btn--outline{ background:transparent; color:var(--color-navy); border:1.5px solid var(--color-navy); }
 .btn--outline:hover{ background:var(--color-navy); color:#fff; }
+/* HPトップ最上部: 商品カタログへの3言語導線（店頭QRの着地点対策・2026-10-05）。色・書体は既存のリンク色を継承 */
+.catalog-links{ display:flex; flex-wrap:wrap; justify-content:center; gap:0 1.4rem; margin:0 0 .6rem; font-size:.92rem; font-weight:700; }
+.catalog-links a{ display:inline-flex; align-items:center; min-height:44px; padding:0 .2rem; }
 
 /* ---- 入口カード（トップページ） ---- */
 .entry-grid{ display:grid; grid-template-columns:1fr; gap:.9rem; margin-bottom:.5rem; }
