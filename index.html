@@ -536,7 +536,7 @@
   <div class="product">
     <h4 class="product__name" data-i18n="prod.tote.name">トートバッグ</h4>
     <figure class="photo">
-      <img class="photo__frame" src="images/prod-tote.jpg" alt="こぎん刺しのトートバッグ">
+      <img class="photo__frame" src="images/prod-tote-carried.jpg" alt="こぎん刺しのトートバッグを持ったところ" data-i18n-alt="prod.tote.alt2">
     </figure>
     <p class="product__desc" data-i18n="prod.tote.d1">こぎん刺しの糸を主役にした、使うほど手に馴染むバッグです。サイズはご相談ください。</p>
     <p class="product__price" data-i18n-html="prod.tote.price">価格：ご相談（下記「<a href="#buy">お求めはこちらから</a>」でご確認ください）</p>
@@ -549,6 +549,15 @@
     </figure>
     <p class="product__desc" data-i18n="prod.card.d1">こぎん刺しの幾何学模様を手元に。カード入れ・普段の持ち歩きにも使えます。</p>
     <p class="product__price" data-i18n-html="prod.card.price">価格：ご相談（下記「<a href="#buy">お求めはこちらから</a>」でご確認ください）</p>
+  </div>
+
+  <div class="product">
+    <h4 class="product__name" data-i18n="prod.kozeniire.name">こぎん刺し 小銭入れ</h4>
+    <figure class="photo">
+      <img class="photo__frame" src="images/prod-kozeniire.jpg" alt="こぎん刺しの小銭入れを両手のひらに載せたところ" data-i18n-alt="prod.kozeniire.alt">
+    </figure>
+    <p class="product__desc" data-i18n="prod.kozeniire.d1">手のひらに収まる大きさの、ファスナー付きの小銭入れです。</p>
+    <p class="product__price" data-i18n="prod.kozeniire.price">価格：1,300円〜（販売店により異なります）</p>
   </div>
 
   <div class="product">
@@ -679,6 +688,7 @@
      雛形JSONが出るのでそれを埋める。
    ・data-i18n         … textContent を差し替え
      data-i18n-html    … innerHTML を差し替え（リンクを含む文で使用）
+     data-i18n-alt     … img の alt 属性を差し替え（2026-10-05 追加・新規写真で使用）
      data-lang-only    … 指定した言語のときだけ表示する（例 "ja" / "en" / "en zh"）。
                          JAとEN/ZHで構成が違う物語セクションで使用。JA既定で出さないものは
                          HTML側に hidden 属性を書いておく＝JSが動かなくてもJA表示は正しい
@@ -751,6 +761,10 @@
       "prod.coaster.price": "Price: ¥700",
       "prod.heading": "Our Products",
       "prod.kogin.lead": "We shape Tsugaru's traditional sashiko technique, Kogin-zashi, into things you can use every day. Because every geometric pattern is hand-stitched, even the same design looks a little different each time.",
+      "prod.kozeniire.alt": "A Kogin-zashi coin purse resting on two open palms",
+      "prod.kozeniire.d1": "A palm-sized coin purse with a zipper.",
+      "prod.kozeniire.name": "Kogin-zashi Coin Purse",
+      "prod.kozeniire.price": "Price: From ¥1,300 (prices vary by store)",
       "prod.kumasuzu.cap": "Photo: Kogin bear bell.",
       "prod.kumasuzu.d1": "A bear bell wrapped in Kogin-zashi embroidery. The clasp can be adjusted to keep the bell silent, so it works as an everyday keychain as well as a trail bell — clip it to a bag or backpack with a carabiner.",
       "prod.kumasuzu.name": "Kogin Bear Bell",
@@ -774,6 +788,7 @@
       "prod.sub.kogin": "Kogin-zashi",
       "prod.sub.nebuta": "Nebuta-Pattern Bags & Drawstring Pouches",
       "prod.sub.pierce": "One-of-a-Kind Earrings",
+      "prod.tote.alt2": "Holding the Kogin-zashi tote bag",
       "prod.tote.cap": "Photo: Tote bag.",
       "prod.tote.d1": "A bag built around Kogin-zashi, one that grows more comfortable in hand the more you use it. Please ask us about sizes.",
       "prod.tote.name": "Tote Bag",
@@ -848,6 +863,10 @@
       "prod.coaster.price": "價格：700日圓",
       "prod.heading": "商品介紹",
       "prod.kogin.lead": "我們將津輕傳統的刺子繡技法「小巾刺」，化為日常可用的物品。幾何圖案皆為一針一線手工繡製，即使是相同的花樣，也會呈現出不同的風貌。",
+      "prod.kozeniire.alt": "放在雙手掌心上的小巾刺零錢包",
+      "prod.kozeniire.d1": "手掌大小、附拉鍊的零錢包。",
+      "prod.kozeniire.name": "小巾刺零錢包",
+      "prod.kozeniire.price": "價格：1,300日圓起（依販售店鋪而異）",
       "prod.kumasuzu.cap": "照片：小巾刺熊鈴。",
       "prod.kumasuzu.d1": "在熊鈴上飾以小巾刺繡。可透過扣具調整讓鈴鐺不發出聲響，因此從登山健行到日常外出，都能用登山扣掛在包包或背包上使用。",
       "prod.kumasuzu.name": "小巾刺熊鈴",
@@ -871,6 +890,7 @@
       "prod.sub.kogin": "小巾刺",
       "prod.sub.nebuta": "睡魔圖案提袋・束口袋",
       "prod.sub.pierce": "獨一無二的耳環",
+      "prod.tote.alt2": "手提小巾刺托特包的樣子",
       "prod.tote.cap": "照片：托特包。",
       "prod.tote.d1": "以小巾刺為主角的提袋，使用越久，越顯得溫潤順手。尺寸歡迎洽詢。",
       "prod.tote.name": "托特包",
@@ -913,6 +933,12 @@
         else if(el.textContent !== v){ el.textContent = v; }
       },
       el.hasAttribute('data-i18n-optional'), el);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-i18n-alt]'), function(el){
+    push(el.getAttribute('data-i18n-alt'),
+      function(){ return el.getAttribute('alt'); },
+      function(v){ if(el.getAttribute('alt') !== v) el.setAttribute('alt', v); },
+      false, el);
   });
   var metaDesc = document.querySelector('meta[name="description"]');
   push('meta.title', function(){ return document.title; }, function(v){ document.title = v; });
