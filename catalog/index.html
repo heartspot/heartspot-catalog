@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<!--
+  ハートスポット 消費者向けWebカタログ（index.html）
+  成果物ID: HEART-015 実装 / 2026-07-24
+
+  写真プレースホルダの差し替え方法:
+    <div class="photo__frame"></div>
+    を
+    <img class="photo__frame" src="images/○○.jpg" alt="○○の写真">
+    に置き換えるだけでOK（クラス名はそのまま）。
+    プレースホルダの「準備中」ラベルはCSSの ::before で描画しているため、
+    imgタグに置き換えた時点で自動的に消える（画像側にalt文言を必ず入れること）。
+-->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#1F3350">
+<title>ハートスポット ― 津軽の手仕事カタログ</title>
+<meta name="description" content="青森市浜田の作業所ハートスポットが手がける、こぎん刺し・ねぶた柄小物・一点もののアクセサリーをご紹介します。">
+<style>
+  :root{
+    --color-bg-outer:#E9E1CE;
+    --color-bg:#FBF7EC;
+    --color-bg-panel:#F1E8D2;
+    --color-ink:#2B2620;
+    --color-muted:#6B6047;
+    --color-navy:#1E3350;
+    --color-navy-deep:#12213A;
+    --color-line:#C9BC9C;
+    --color-frame-bg:#E6DCC3;
+    --color-frame-border:#B7A97F;
+    --max-width:560px;
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--color-bg-outer);
+    color:var(--color-ink);
+    font-family:"游ゴシック体","Yu Gothic Medium","Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+    font-size:16px;
+    line-height:1.9;
+    -webkit-text-size-adjust:100%;
+  }
+  h1,h2,h3,h4{
+    font-family:"游明朝","Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+    color:var(--color-navy);
+    line-height:1.6;
+    margin:0 0 1.25rem;
+    font-weight:600;
+  }
+  p{ margin:0 0 1.25rem; }
+  ul{ margin:0 0 1.25rem; padding-left:1.4em; }
+  li{ margin-bottom:.5rem; }
+  a{ color:var(--color-navy); }
+  a:hover{ color:var(--color-navy-deep); }
+
+  .page{
+    max-width:var(--max-width);
+    margin:0 auto;
+    background:var(--color-bg);
+    padding:0 1.4rem;
+  }
+  @media (min-width:600px){
+    .page{ box-shadow:0 0 48px rgba(30,30,20,.08); }
+  }
+
+  /* ---- 区切り線（こぎん風の幾何学・控えめ） ---- */
+  .kogin-divider{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:14px;
+    margin:3rem 0;
+  }
+  .kogin-divider span{
+    width:6px;height:6px;
+    background:var(--color-navy);
+    opacity:.4;
+    transform:rotate(45deg);
+    flex-shrink:0;
+  }
+  .kogin-divider span:nth-child(3){ width:9px;height:9px; opacity:.65; }
+
+  /* ---- 写真プレースホルダ ---- */
+  figure.photo{ margin:0 0 .5rem; }
+  .photo__frame{
+    display:block;
+    width:100%;
+    aspect-ratio:4/3;
+    background:var(--color-frame-bg);
+    border:1px solid var(--color-frame-border);
+    object-fit:cover;
+    position:relative;
+  }
+  .photo__frame::before{
+    content:"準備中";
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--color-frame-border);
+    font-size:.8rem;
+    letter-spacing:.1em;
+  }
+  figure.photo figcaption{
+    margin-top:.6rem;
+    margin-bottom:1.25rem;
+    font-size:.8rem;
+    color:var(--color-muted);
+    text-align:center;
+  }
+
+  /* ---- ヒーロー（1.ファーストビュー） ---- */
+  .hero{
+    min-height:100vh;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    padding-top:2rem;
+  }
+  .hero .photo--hero{
+    flex:1 1 auto;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+    margin-bottom:0;
+  }
+  .hero .photo--hero .photo__frame{
+    flex:1 1 auto;
+    min-height:220px;
+    aspect-ratio:auto;
+  }
+  .hero .photo--hero figcaption{ flex:0 0 auto; }
+  .hero__body{
+    flex:0 0 auto;
+    text-align:center;
+    padding:.5rem 0 1.5rem;
+  }
+  .hero__catch{
+    font-size:clamp(1.5rem,6vw,2rem);
+    line-height:1.7;
+    margin-bottom:1.25rem;
+  }
+  .hero__lead{
+    font-size:1rem;
+    margin-bottom:.85rem;
+  }
+  .hero__guide{
+    font-size:.85rem;
+    color:var(--color-muted);
+    margin-bottom:0;
+  }
+  .hero__cta{
+    display:inline-block;
+    margin-top:1.25rem;
+    padding:.9rem 2rem;
+    background:var(--color-navy);
+    color:var(--color-bg);
+    font-weight:600;
+    font-size:.95rem;
+    letter-spacing:.05em;
+    text-decoration:none;
+    border-radius:2px;
+  }
+  .hero__cta:hover{ background:var(--color-navy-deep); color:var(--color-bg); }
+  .hero__scroll{
+    flex:0 0 auto;
+    display:block;
+    text-align:center;
+    padding-bottom:1.5rem;
+    text-decoration:none;
+    font-size:1.3rem;
+    color:var(--color-navy);
+    animation:hero-bob 2.2s ease-in-out infinite;
+  }
+  @keyframes hero-bob{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(6px); }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hero__scroll{ animation:none; }
+  }
+
+  /* ---- ページ内メニュー（ファーストビュー直下・小型） ---- */
+  .menu{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    row-gap:.4rem;
+    padding:.5rem 0 .9rem;
+    border-bottom:1px solid var(--color-line);
+  }
+  .menu a{
+    display:inline-block;
+    padding:.3rem .6rem;
+    font-size:.78rem;
+    line-height:1.3;
+    color:var(--color-navy);
+    text-decoration:none;
+    border-left:1px solid var(--color-line);
+  }
+  .menu a:first-child{ border-left:none; }
+
+  /* ---- セクション共通 ---- */
+  section, footer.about{ padding:1rem 0 2.5rem; }
+  .section-heading{ font-size:1.35rem; }
+  .section-subheading{ font-size:1.05rem; margin-top:2rem; }
+
+  /* ---- 3.商品 ---- */
+  .product{
+    border-top:1px solid var(--color-line);
+    padding-top:1.5rem;
+    margin-bottom:1.5rem;
+  }
+  .product__name{ font-size:1rem; margin-bottom:.75rem; }
+  .product__desc{ margin-bottom:.5rem; }
+  .product__price{
+    font-weight:600;
+    color:var(--color-navy);
+    margin-bottom:0;
+  }
+
+  /* ---- 5.買い方（最重要・CTA） ---- */
+  .buy{
+    background:var(--color-bg-panel);
+    border-top:2px solid var(--color-navy);
+    border-bottom:2px solid var(--color-navy);
+    margin:0 -1.4rem;
+    padding:2rem 1.4rem 2.5rem;
+  }
+  .buy-block{ margin-bottom:2rem; }
+  .buy-block:last-child{ margin-bottom:0; }
+  .buy-block__title{ font-size:1rem; margin-bottom:.75rem; }
+  .store-list{ list-style:none; padding-left:0; }
+  .store-list li{
+    padding:.5rem .75rem;
+    margin-bottom:.5rem;
+    background:var(--color-bg);
+    border-left:3px solid var(--color-navy);
+  }
+  .contact-link{
+    display:inline-block;
+    padding:.4rem 0;
+    font-weight:600;
+    text-decoration:underline;
+  }
+
+  /* ---- 6.ハートスポットについて ---- */
+  .about__org{ font-weight:600; margin-bottom:.5rem; }
+  .about__contact{ font-style:normal; }
+  .about__contact p{ margin-bottom:.4rem; }
+
+  /* ================================================================
+     PC用サイドナビ（2026-07-31）
+     ページが1万px近くあり、スクロールで現在地を見失う。
+     左の余白に固定ナビを置いて、余白の解消と回遊性を同時に取る。
+     モバイルには一切出さない（既存のインラインnavがそのまま働く）。
+     ================================================================ */
+  .sidenav{ display:none; }
+
+  @media (min-width:1000px){
+    /* margin-right を入れないと1000〜1050px幅で本文が画面の右端に張り付く */
+    .page{ max-width:760px;
+           margin-left:max(300px, calc(50% - 380px));
+           margin-right:1.5rem; }
+    .photo{ max-width:520px; margin-left:auto; margin-right:auto; }
+
+    .sidenav{
+      display:block;
+      position:fixed;
+      top:50%; transform:translateY(-50%);
+      left:max(1.5rem, calc(50% - 380px - 260px));
+      width:220px;
+      font-size:.9rem;
+      line-height:1.7;
+      z-index:10;
+    }
+    .sidenav__title{
+      font-family:"游明朝","Yu Mincho",serif;
+      color:var(--color-navy);
+      font-size:.95rem;
+      margin:0 0 .8rem;
+      padding-bottom:.6rem;
+      border-bottom:1px solid var(--color-line);
+    }
+    .sidenav ul{ list-style:none; margin:0; padding:0; }
+    .sidenav li{ margin:0 0 .55rem; }
+    .sidenav a{
+      text-decoration:none;
+      color:var(--color-ink);
+      opacity:.7;
+      border-left:2px solid transparent;
+      padding-left:.7rem;
+      display:block;
+      transition:opacity .2s, border-color .2s;
+    }
+    .sidenav a:hover{ opacity:1; }
+    /* 現在地。IntersectionObserverが .is-current を付け替える */
+    .sidenav a.is-current{
+      opacity:1;
+      color:var(--color-navy);
+      border-left-color:var(--color-navy);
+      font-weight:600;
+    }
+    .sidenav__foot{
+      margin-top:1.2rem; padding-top:.8rem;
+      border-top:1px solid var(--color-line);
+      font-size:.8rem; opacity:.75;
+    }
+    /* 上部のインラインnavはサイドナビと重複するのでPCでは隠す */
+    .menu{ display:none; }
+  }
+
+  /* 画面が狭いとサイドナビが本文に被るため、その手前で通常表示へ戻す */
+  @media (max-width:999px){
+    .page{ margin-left:auto; margin-right:auto; }
+  }
+  /* ================================================================
+     言語切替バー（2026-08-06 多言語化）
+     固定・右上。PCの固定サイドナビは左なので干渉しない。
+     position:fixed なので通常フローには影響しない＝日本語表示は不変。
+     ================================================================ */
+  .langbar{
+    position:fixed;
+    top:.5rem; right:.5rem;
+    z-index:30;
+    display:flex;
+    background:rgba(251,247,236,.94);
+    border:1px solid var(--color-line);
+    border-radius:3px;
+    box-shadow:0 1px 6px rgba(30,30,20,.12);
+    overflow:hidden;
+  }
+  .langbar__btn{
+    appearance:none;
+    -webkit-appearance:none;
+    margin:0;
+    border:0;
+    border-left:1px solid var(--color-line);
+    background:transparent;
+    color:var(--color-navy);
+    font-family:inherit;
+    font-size:.72rem;
+    line-height:1;
+    letter-spacing:.02em;
+    padding:.45rem .55rem;
+    cursor:pointer;
+  }
+  .langbar__btn:first-child{ border-left:0; }
+  .langbar__btn:hover{ background:rgba(30,51,80,.08); }
+  .langbar__btn[aria-pressed="true"]{
+    background:var(--color-navy);
+    color:var(--color-bg);
+    font-weight:600;
+  }
+  @media (min-width:1000px){
+    .langbar{ top:1.2rem; right:1.2rem; }
+    .langbar__btn{ font-size:.78rem; padding:.5rem .7rem; }
+  }
+  /* 対訳が無い（＝構造上その言語に存在しない）要素の非表示。
+     .kogin-divider 等 display 指定のある要素にも効くよう !important を付ける */
+  [hidden]{ display:none !important; }
+
+  .story__lead{
+    font-family:"游明朝","Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+    color:var(--color-navy);
+    font-size:1.08rem;
+    line-height:1.7;
+  }
+  /* 写真プレースホルダの「準備中」も言語に追随させる（対訳md 1-3） */
+  html[lang="en"] .photo__frame::before{ content:"Photo coming soon"; }
+  html[lang^="zh"] .photo__frame::before{ content:"照片準備中"; }
+  /* 言語別フォント。html[lang] で切り替わるため日本語表示（lang="ja"）には一切影響しない。
+     末尾に日本語のフォントスタックを残してあるのは、未訳で日本語のまま出ている箇所が
+     MSゴシック等の既定フォントに落ちて崩れるのを防ぐため（欧文・中文は先頭の書体が当たる） */
+  html[lang="en"] body{
+    font-family:"Helvetica Neue",Helvetica,Arial,"游ゴシック体","Yu Gothic Medium","Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+  }
+  html[lang="en"] h1,html[lang="en"] h2,html[lang="en"] h3,html[lang="en"] h4,
+  html[lang="en"] .sidenav__title,html[lang="en"] .story__lead{
+    font-family:Georgia,"Times New Roman","游明朝","Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  }
+  html[lang^="zh"] body{
+    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Noto Sans CJK TC","游ゴシック体","Yu Gothic Medium","Yu Gothic","YuGothic","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+  }
+  html[lang^="zh"] h1,html[lang^="zh"] h2,html[lang^="zh"] h3,html[lang^="zh"] h4,
+  html[lang^="zh"] .sidenav__title,html[lang^="zh"] .story__lead{
+    font-family:"Noto Serif TC","Songti TC","Microsoft JhengHei","游明朝","Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  }
+</style>
+</head>
+<body>
+<div class="langbar" role="group" aria-label="言語切替 / Language / 語言">
+  <button type="button" class="langbar__btn" data-lang="ja" lang="ja">日本語</button>
+  <button type="button" class="langbar__btn" data-lang="en" lang="en">English</button>
+  <button type="button" class="langbar__btn" data-lang="zh" lang="zh-Hant">中文</button>
+</div>
+<nav class="sidenav" aria-label="サイドメニュー">
+  <p class="sidenav__title" data-i18n="nav.title">目次</p>
+  <ul>
+    <li><a href="#top" data-i18n="nav.top">はじめに</a></li>
+    <li><a href="#story" data-i18n="nav.story">津軽の手仕事</a></li>
+    <li><a href="#products" data-i18n="nav.products">商品</a></li>
+    <li><a href="#order-made" data-i18n="nav.order">オーダーメイド</a></li>
+    <li><a href="#buy" data-i18n="nav.buy">買い方</a></li>
+    <li><a href="#about" data-i18n="nav.about">ハートスポットについて</a></li>
+  </ul>
+  <p class="sidenav__foot" data-i18n-html="nav.foot">017-773-4327<br>青森市浜田豊田368</p>
+</nav>
+
+<div class="page">
+
+<header class="hero" id="top">
+  <figure class="photo photo--hero">
+    <img class="photo__frame" src="images/hero-kogin-fabric.jpg" alt="こぎん刺しの生地のクローズアップ">
+  </figure>
+  <div class="hero__body">
+    <h1 class="hero__catch" data-i18n-html="hero.catch">一枚の布に、<br>手仕事の時間を。</h1>
+    <p class="hero__lead" data-i18n="hero.lead">津軽の手仕事を、青森市浜田の作業所「ハートスポット」がひとつずつ形にしています。</p>
+    <p class="hero__guide" data-i18n="hero.guide">このページでは、こぎん刺し・ねぶた柄の小物・一点もののアクセサリーをご紹介しています。</p>
+    <a class="hero__cta" href="#products" data-i18n="hero.cta">商品を見る ↓</a>
+  </div>
+  <a class="hero__scroll" href="#story" aria-label="次のセクションへスクロール">↓</a>
+</header>
+
+<nav class="menu" aria-label="ページ内メニュー">
+  <a href="#products" data-i18n="nav.products">商品</a>
+  <a href="#order-made" data-i18n="nav.order">オーダーメイド</a>
+  <a href="#buy" data-i18n="nav.buy">買い方</a>
+  <a href="#about" data-i18n="nav.about">ハートスポットについて</a>
+</nav>
+
+<div class="kogin-divider" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+
+<section id="new-items" aria-label="新しく加わった商品">
+  <figure class="photo">
+    <img class="photo__frame" src="images/prod-okusuritecho.jpg" alt="こぎん刺しの幾何学模様をあしらったお薬手帳ケース2点">
+  </figure>
+  <figure class="photo">
+    <img class="photo__frame" src="images/prod-shiori.jpg" alt="りんごのこぎん刺しをあしらった栞2点">
+  </figure>
+</section>
+
+<section id="story" aria-labelledby="story-heading">
+  <h2 id="story-heading" class="section-heading" data-i18n="story.heading">津軽の手仕事から生まれるもの</h2>
+
+  <p data-lang-only="en" hidden>During the Edo period, farmers in the Tsugaru region of Aomori were forbidden from wearing cotton kimono, and had to survive the long winters wrapped in nothing but a single layer of coarse hemp cloth. Kogin-zashi is counted among Japan's three great sashiko embroidery traditions, and at Heart Spot we stitch it — one piece at a time — into coasters, pouches, bags, and Omamori, a traditional Japanese protective charm.</p>
+  <p data-lang-only="zh" hidden>江戶時代，津輕地區的農民被禁止穿著棉製和服，只能靠著一件織眼粗疏的麻布，撐過漫長的寒冬。小巾刺是日本三大刺子繡之一，在 Heart Spot，我們將它一針一針地繡進杯墊、小物包、提袋，以及御守（日式護身符）之中。</p>
+
+  <div class="story__docx" data-lang-only="en" hidden>
+    <p class="story__lead"><strong>Kogin-zashi – A Tradition Stitched with the Spirit of Aomori</strong></p>
+    <p>Kogin-zashi is a traditional embroidery technique born in Aomori, one of the snowiest regions in Japan. For generations, people here faced long, harsh winters with creativity, patience, and resilience. By carefully stitching cotton thread onto hemp fabric, they made their clothing warmer, stronger, and longer-lasting.</p>
+    <p>Over time, this practical wisdom became a beautiful cultural tradition. Today, Kogin-zashi is admired not only for its intricate geometric patterns, but also for the spirit of care, perseverance, and craftsmanship woven into every stitch.</p>
+    <p>At Heart Spot, our artisans with disabilities proudly continue this tradition by creating each piece entirely by hand. No two works are exactly alike—every item is unique, reflecting the personality, dedication, and warmth of its maker.</p>
+    <p>When you take home a piece of Kogin-zashi, you are bringing home more than a handcrafted souvenir. You are carrying with you the story of Aomori, the beauty of Japanese craftsmanship, and the hopes of the people who continue this tradition for future generations.</p>
+    <p>Thank you for helping us preserve a living tradition—one stitch, one story, and one heart at a time.</p>
+  </div>
+  <div class="story__docx" data-lang-only="zh" hidden>
+    <p class="story__lead"><strong>津輕小巾刺——承載青森溫暖與智慧的傳統工藝</strong></p>
+    <p>津輕小巾刺（Kogin-zashi）誕生於日本青森縣。這片土地冬季漫長、白雪覆蓋，當地人世世代代憑藉著智慧、耐心與堅韌，創造出這項獨特的刺繡技藝。</p>
+    <p>人們將棉線一針一線地繡在麻布上，使布料更加保暖、耐用，也讓平凡的布料展現出精緻而富有美感的幾何圖案。隨著時代演進，小巾刺已不只是生活用品，更成為青森最具代表性的傳統工藝之一。</p>
+    <p>在 Heart Spot，身心障礙的創作者們懷抱著對傳統文化的熱愛，細心完成每一件作品。每一針、每一線，都蘊含著製作者的用心，因此世界上沒有兩件完全相同的作品。</p>
+    <p>當您帶回一件小巾刺作品時，不只是帶回一份旅行紀念，更帶回了青森的文化、人與人之間的溫暖，以及這份珍貴的手工技藝。</p>
+    <p>感謝您與我們一起，讓這份美好的傳統繼續傳承下去。</p>
+  </div>
+  <p data-i18n="story.p1" data-lang-only="ja">こぎん刺しは、津軽の農村で生まれた実用の技です。江戸時代、この地方の農民は木綿の着物を着ることを許されず、目の粗い麻布一枚で長い冬を越さなければなりませんでした。少しでも布を丈夫に、少しでも暖かくするために、女性たちは木綿の糸で布目を埋めるように刺し続けました。</p>
+
+  <p data-i18n="story.p2" data-lang-only="ja">生き延びるための手仕事が、幾何学模様の美として今に残っています。この技法は、日本三大刺し子のひとつ。ハートスポットでは、コースターや御守り、ポーチやバッグにひとつずつ刺しています。</p>
+
+  <figure class="photo">
+    <img class="photo__frame" src="images/story-kogin-stitching-hands.jpg" alt="こぎん刺しを刺している手元">
+  </figure>
+
+  <h3 class="section-subheading" data-i18n="story.sub1">ねぶたの記憶を、日常の道具に</h3>
+  <p data-i18n="story.p3">もうひとつの柱が、ねぶたの絵柄をまとった生地です。ねぶたの顔をあしらった藍と白の生地。この生地をバッグや巾着に仕立てています。祭りの記憶を、日常の道具に変える仕事です。</p>
+
+  <figure class="photo">
+    <img class="photo__frame" src="images/story-nebuta-bag.jpg" alt="ねぶたの顔をあしらった藍と白の生地のバッグ">
+  </figure>
+
+  <h3 class="section-subheading" data-i18n="story.sub2">同じものは、ひとつとない</h3>
+  <p data-i18n="story.p4">一点もののピアスは、ビーズやタッセル、かぎ針編み、ガラス玉など、作り手一人ひとりが選ぶ素材と組み合わせでできています。御守りもまた、糸を選び、形を整え、一つずつ手で仕上げる一点ものです。</p>
+
+  <figure class="photo">
+    <img class="photo__frame" src="images/story-pierce-lineup.jpg" alt="一点もののピアスの一覧">
+  </figure>
+
+  <p data-i18n="story.p5" data-lang-only="ja">作っているのは、障がいのある利用者たちです。ですがこの商品を選んでいただきたい理由は、そこではありません。津軽の伝統工芸を受け継ぐ丁寧な手仕事、一枚の布・一本の糸に向き合う時間、そこから生まれる物そのものの良さで選んでいただきたいと考えています。</p>
+
+  <p data-i18n="story.p6">津軽の布と祭りの記憶、そして日々の手仕事。ハートスポットの商品は、その掛け合わせでできています。</p>
+</section>
+
+<div class="kogin-divider" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+
+<section id="products" aria-labelledby="products-heading">
+  <h2 id="products-heading" class="section-heading" data-i18n="prod.heading">商品のご紹介</h2>
+  <p data-i18n-html="prod.lead">価格が決まっている御守り・コースター・一点もののピアスは、そのままご案内できます。そのほかの商品は仕様によって価格が変わるため、下記「<a href="#buy">お求めはこちらから</a>」でご確認ください。</p>
+  <p data-i18n="prod.bulk">まとまった数のご注文は、お値引きのご相談も承ります。</p>
+
+  <h3 class="section-subheading" data-i18n="prod.sub.kogin">こぎん刺し</h3>
+  <p data-i18n="prod.kogin.lead">津軽の伝統的な刺し子技法「こぎん刺し」を、日々使える形にしています。幾何学模様は一つひとつ手刺しのため、同じ柄でも表情が異なります。</p>
+
+  <div class="product">
+    <h4 class="product__name" data-i18n="prod.omamori.name">御守り</h4>
+    <figure class="photo">
+      <img class="photo__frame" src="images/prod-omamori.jpg" alt="こぎん刺しの御守り">
+    </figure>
+    <p class="product__desc" data-i18n="prod.omamori.d1">真言宗阿闍梨でもある理事長が、一体ずつ魂入れ（しんいれ）をしています。</p>
+    <p class="product__desc" data-i18n="prod.omamori.d2">糸を選び、形を整え、一つずつ手で仕上げた一点ものです。自分のお守りに、大切な人への贈り物に。</p>
+    <p class="product__price" data-i18n="prod.omamori.price">価格：700円</p>
+  </div>
+
+  <div class="product">
+    <h4 class="product__name" data-i18n="prod.coaster.name">コースター</h4>
+    <figure class="photo">
+      <img class="photo__frame" src="images/prod-coaster.jpg" alt="こぎん刺しのコースター">
+    </figure>
+    <p class="product__desc" data-i18n="prod.coaster.d1">こぎん刺しの幾何学模様を、毎日の食卓に。手刺しのため一枚ごとに表情が異なります。</p>
+    <p class="product__price" data-i18n="prod.coaster.price">価格：700円</p>
+  </div>
+
+  <div class="product">
+    <h4 class="product__name" data-i18n="prod.pouch.name">ポーチ</h4>
+    <figure class="photo">
+      <img class="photo__frame" src="images/prod-pouch.jpg" alt="こぎん模様のポーチ">
+    </figure>
+    <p class="product__desc" data-i18n="prod.pouch.d1">手刺しのこぎん模様をあしらった、普段使いの小物入れです。サイズはご相談ください。</p>
+    <p class="product__price" data-i18n-html="prod.pouch.price">価格：ご相談（下記「<a href="#buy">お求めはこちらから</a>」でご確認ください）</p>
+  </div>
+
+  <div class="product">
+    <h4 class="product__name" data-i18n="prod.tote.name">トートバッグ</h4>
+    <figure class="photo">
+      <img class="photo__frame" src="images/prod-tote-carried.jpg" alt="こぎん刺しのトートバッグを持ったところ" data-i18n-alt="prod.tote.alt2">
+    </figure>
+    <p class="product__desc" data-i18n="prod.tote.d1">こぎん刺しの糸を主役にした、使うほど手に馴染むバッグです。サイズはご相談ください。</p>
+    <p class="product__price" data-i18n-html="prod.tote.price">価格：ご相談（下記「<a href="#buy">お求めはこちらから</a>」でご確認ください）</p>
+  </div>
+
+  <div class="product">
+    <h4 class="product__name" data-i18n="prod.card.name">名刺入れ</h4>
+    <figure class="photo">
+      <img class="photo__frame" src="images/prod-card.jpg" alt="こぎん刺しの名刺入れ">
+    </figure>
+    <p class="product__desc" data-i18n="prod.card.d1">こぎん刺しの幾何学模様を手元に。カード入れ・普段の持ち歩きにも使えます。</p>
+    <p class="product__price" data-i18n-html="prod.card.price">価格：ご相談（下記「<a href="#buy">お求めはこちらから</a>」でご確認ください）</p>
+  </div>
+
+  <div class="product">
+    <h4 class="product__name" data-i18n="prod.kozeniire.name">こぎん刺し 小銭入れ</h4>
+    <figure class="photo">
+      <img class="photo__frame" src="images/prod-kozeniire.jpg" alt="こぎん刺しの小銭入れを両手のひらに載せたところ" data-i18n-alt="prod.kozeniire.alt">
+    </figure>
+    <p class="product__desc" data-i18n="prod.kozeniire.d1">手のひらに収まる大きさの、ファスナー付きの小銭入れです。</p>
+    <p class="product__price" data-i18n="prod.kozeniire.price">価格：1,300円〜（販売店により異なります）</p>
+  </div>
+
+  <div class="product">
+    <h4 class="product__name" data-i18n="prod.kumasuzu.name">こぎん熊すず</h4>
+    <figure class="photo">
+      <img class="photo__frame" src="images/prod-kumasuzu.jpg" alt="こぎん刺しをあしらった熊すず">
+    </figure>
+    <p class="product__desc" data-i18n="prod.kumasuzu.d1">熊すずの上からこぎん刺しをあしらいました。留め具で音が出ないように調節できるので、山歩きからまちなかまで、カラビナでバッグやリュックに付けてお使いいただけます。</p>
+    <p class="product__price" data-i18n-html="prod.kumasuzu.price">価格：ご相談（下記「<a href="#buy">お求めはこちらから</a>」でご確認ください）</p>
+  </div>
+
+  <h3 class="section-subheading" data-i18n="prod.sub.pierce">一点もののピアス</h3>
+  <div class="product">
+    <figure class="photo">
+      <img class="photo__frame" src="images/story-pierce-lineup.jpg" alt="一点もののピアスの一覧">
+    </figure>
+    <p class="product__desc" data-i18n="prod.pierce.d1">ビーズ・タッセル・かぎ針編み・ガラス玉を組み合わせたピアスです。作り手一人ひとりが素材を選ぶため、同じものは二つとありません。</p>
+    <p class="product__price" data-i18n="prod.pierce.price">価格：500円</p>
+  </div>
+
+  <h3 class="section-subheading" data-i18n="prod.sub.nebuta">ねぶた柄生地のバッグ・巾着</h3>
+  <div class="product">
+    <figure class="photo">
+      <img class="photo__frame" src="images/story-nebuta-bag.jpg" alt="ねぶたの顔をあしらった藍と白の生地のバッグ">
+    </figure>
+    <p class="product__desc" data-i18n="prod.nebuta.d1">ねぶたの顔をあしらった藍と白の生地。トートバッグ・巾着・肩掛けポーチに仕立てています。青森らしさを持ち歩ける一枚です。サイズはご相談ください。</p>
+    <p class="product__price" data-i18n-html="prod.nebuta.price">価格：ご相談（下記「<a href="#buy">お求めはこちらから</a>」でご確認ください）</p>
+  </div>
+</section>
+
+<div class="kogin-divider" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+
+<section id="order-made" aria-labelledby="order-made-heading">
+  <h2 id="order-made-heading" class="section-heading" data-i18n="order.heading">オーダーメイドも承っています</h2>
+  <p data-i18n="order.lead">名前や好きなモチーフ、記念日のデザインなどを、こぎん刺しや生地に落とし込んだ、世界に一つだけの御守りや小物を作れます。大切な人への贈り物にも。</p>
+
+  <ul>
+    <li data-i18n="order.li1">対応例：名前・イニシャルを図案にした御守り／好きなモチーフのこぎん刺し小物／オリジナル柄のポーチ・巾着／用途に合わせたサイズのバッグ（お弁当が入る・A4ファイルが入る・ちょっとしたお出かけ用・荷物が多い方向け・プレゼント用 など）</li>
+    <li data-i18n="order.li2">図案から新しく起こす場合：＋2,000円</li>
+    <li data-i18n="order.li3">本体価格・数量・納期はご相談のうえで決めます</li>
+  </ul>
+
+  <figure class="photo">
+    <img class="photo__frame" src="images/order-made-cardcase.jpg" alt="オーダーメイドで製作した名刺入れ">
+  </figure>
+</section>
+
+<div class="kogin-divider" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+
+<section class="buy" id="buy" aria-labelledby="buy-heading">
+  <h2 id="buy-heading" class="section-heading" data-i18n="buy.heading">お求めはこちらから</h2>
+  <p data-i18n="buy.lead">ハートスポットの商品は、次の2つの方法でお求めいただけます。</p>
+
+  <div class="buy-block">
+    <h3 class="buy-block__title" data-i18n="buy.b1.title">① 取扱店で</h3>
+    <p data-i18n="buy.b1.p1">現在、次のお店でお取り扱いいただいています。</p>
+    <ul class="store-list">
+      <li data-i18n="buy.store1">浅虫金治郎プリン</li>
+      <li data-i18n="buy.store2">あんてな青森</li>
+      <li data-i18n="buy.store4">酸ヶ湯温泉</li>
+      <li data-i18n="buy.store5">ねこおた</li>
+      <li data-i18n="buy.store3">ひょうたん茶屋</li>
+      <li data-i18n="buy.store6">ハートスポット事業所内</li>
+    </ul>
+    <p data-i18n="buy.b1.p2">店頭で実際に商品をご覧いただきながらお求めいただけます。取り扱い商品は店舗によって異なります。</p>
+  </div>
+
+  <div class="buy-block">
+    <h3 class="buy-block__title" data-i18n="buy.b2.title">② お電話・メールでのお問い合わせ</h3>
+    <p data-i18n="buy.b2.p1">近くに設置店がない場合や、オーダーメイド・まとまった数のご相談は、お電話またはメールで承っています。</p>
+    <p><a class="contact-link" href="tel:0177734327" data-i18n="buy.b2.tel">電話：017-773-4327</a></p>
+    <p><a class="contact-link" href="mailto:heartspot017@gmail.com" data-i18n="buy.b2.mail">メール：heartspot017@gmail.com</a></p>
+    <p data-i18n-html="buy.b2.ig">InstagramのDMでもご相談いただけます（<a class="contact-link" href="https://www.instagram.com/heartspot.4327/" target="_blank" rel="noopener">@heartspot.4327</a>）</p>
+    <p data-i18n="buy.b2.pay">お支払いは、現金のほかキャッシュレス決済もご利用いただけます。</p>
+  </div>
+
+</section>
+
+<div class="kogin-divider" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+
+<footer class="about" id="about" aria-labelledby="about-heading">
+  <h2 id="about-heading" class="section-heading" data-i18n="about.heading">ハートスポットについて</h2>
+  <p data-i18n="about.p1">ハートスポットは、青森県青森市浜田にある地域の作業所です。津軽の伝統工芸であるこぎん刺しや、ねぶたの絵柄をまとった生地を使い、一つひとつの商品を手仕事で仕立てています。</p>
+
+  <address class="about__contact">
+    <p class="about__org" data-i18n="about.org">ハートスポット</p>
+    <p data-i18n="about.addr">所在地：青森県青森市浜田豊田368</p>
+    <p><a class="contact-link" href="tel:0177734327" data-i18n="about.tel">電話：017-773-4327</a></p>
+    <p><a class="contact-link" href="mailto:heartspot017@gmail.com" data-i18n="about.mail">メール：heartspot017@gmail.com</a></p>
+    <p><a class="contact-link" href="https://www.instagram.com/heartspot.4327/" target="_blank" rel="noopener" data-i18n="about.ig">Instagram：@heartspot.4327</a></p>
+    <p><a class="contact-link" href="../">事業所ホームページはこちら</a></p>
+  </address>
+</footer>
+
+</div>
+
+<script>
+// サイドナビの現在地ハイライト。外部ライブラリは使わない。
+(function(){
+  var links = document.querySelectorAll('.sidenav a');
+  if(!links.length) return;
+  var map = {};
+  links.forEach(function(a){
+    var t = document.querySelector(a.getAttribute('href'));
+    if(t) map[t.id] = a;
+  });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('is-current'); });
+      if(map[e.target.id]) map[e.target.id].classList.add('is-current');
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  Object.keys(map).forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) io.observe(el);
+  });
+})();
+</script>
+<script>
+/* ================================================================
+   多言語切替（i18n）機構 — 2026-08-06
+   ・日本語は「HTMLに書かれている文面そのもの」が正本。JS側にja辞書は持たず、
+     起動時にDOMから吸い上げる（＝辞書とHTMLの二重管理をしない／日本語表示は絶対にズレない）
+   ・翻訳の追加は下の I18N.en / I18N.zh にキーを足すだけ。
+   ・対訳が無いキーは日本語のまま表示（虫食い防止）。未訳キーはコンソールに一覧が出る。
+     流し込み担当は DevTools で i18nSkeleton('en') を実行すると、未訳キー＋日本語原文の
+     雛形JSONが出るのでそれを埋める。
+   ・data-i18n         … textContent を差し替え
+     data-i18n-html    … innerHTML を差し替え（リンクを含む文で使用）
+     data-i18n-alt     … img の alt 属性を差し替え（2026-10-05 追加・新規写真で使用）
+     data-lang-only    … 指定した言語のときだけ表示する（例 "ja" / "en" / "en zh"）。
+                         JAとEN/ZHで構成が違う物語セクションで使用。JA既定で出さないものは
+                         HTML側に hidden 属性を書いておく＝JSが動かなくてもJA表示は正しい
+     data-i18n-optional… その言語に対訳が無い場合、日本語で出さずに要素ごと隠す
+                         （現在は使用箇所なし＝全キー訳出済み。構成差が出た時のために残置）
+   ・?lang=en / ?lang=zh をURLに付けると直接その言語で開ける（選択はlocalStorageに保存）
+   ================================================================ */
+(function(){
+  'use strict';
+
+  var HTML_LANG = { ja:'ja', en:'en', zh:'zh-Hant' };
+  var STORE_KEY = 'hs-catalog-lang';
+
+  var I18N = {
+    ja: {},
+    en: {
+      "about.addr": "Address: 青森県青森市浜田豊田368",
+      "about.heading": "About Heart Spot",
+      "about.ig": "Instagram: @heartspot.4327",
+      "about.mail": "Email: heartspot017@gmail.com",
+      "about.org": "Heart Spot",
+      "about.p1": "Heart Spot is a community workshop located in Hamada, Aomori City, Aomori Prefecture. Using Tsugaru's traditional craft of Kogin-zashi and fabric featuring Nebuta imagery, we handcraft each product one at a time.",
+      "about.tel": "Phone: 017-773-4327",
+      "buy.b1.p1": "Our products are currently available at the following stores.",
+      "buy.b1.p2": "You can see the actual products in person before purchasing. The items available vary by store.",
+      "buy.b1.title": "① At Our Retail Stores",
+      "buy.b2.ig": "You are also welcome to reach us via Instagram DM (<a class=\"contact-link\" href=\"https://www.instagram.com/heartspot.4327/\" target=\"_blank\" rel=\"noopener\">@heartspot.4327</a>).",
+      "buy.b2.mail": "Email: heartspot017@gmail.com",
+      "buy.b2.p1": "If there is no store near you, or for custom orders and bulk inquiries, please contact us by phone or email.",
+      "buy.b2.pay": "In addition to cash, cashless payment options are also available.",
+      "buy.b2.tel": "Phone: 017-773-4327",
+      "buy.b2.title": "② By Phone or Email",
+      "buy.heading": "How to Buy",
+      "buy.lead": "Heart Spot products can be purchased in the following two ways.",
+      "buy.store1": "浅虫金治郎プリン",
+      "buy.store2": "あんてな青森",
+      "buy.store3": "ひょうたん茶屋",
+      "buy.store4": "酸ヶ湯温泉",
+      "buy.store5": "ねこおた",
+      "buy.store6": "ハートスポット事業所内",
+      "hero.cap": "Photo: Cover image. A close-up of Kogin-zashi fabric or hands at work.",
+      "hero.catch": "In every piece of cloth,<br>hours of handwork.",
+      "hero.cta": "See the Products ↓",
+      "hero.guide": "On this page, you'll find Kogin-zashi embroidery, Nebuta-pattern goods, and one-of-a-kind accessories.",
+      "hero.lead": "Heart Spot, a workshop in Hamada, Aomori City, shapes Tsugaru handcraft into being — one piece at a time.",
+      "meta.description": "Kogin-zashi embroidery, Nebuta-pattern accessories, and one-of-a-kind handmade jewelry from Heart Spot, a craft workshop in Aomori City, Japan.",
+      "meta.title": "Heart Spot — A Tsugaru Handcraft Catalog",
+      "nav.about": "About Heart Spot",
+      "nav.buy": "How to Buy",
+      "nav.foot": "017-773-4327<br>青森市浜田豊田368",
+      "nav.order": "Custom Orders",
+      "nav.products": "Products",
+      "nav.story": "Tsugaru Handcraft",
+      "nav.title": "Contents",
+      "nav.top": "Home",
+      "order.cap": "Photo: A piece made to custom order.",
+      "order.heading": "We Also Accept Custom Orders",
+      "order.lead": "We can turn a name, a favorite motif, or a design for a special occasion into Kogin-zashi or fabric work — creating a one-of-a-kind Omamori or accessory just for you. Also makes a meaningful gift for someone important to you.",
+      "order.li1": "Examples: An Omamori with a name or initials worked into the design / a Kogin-zashi item featuring a favorite motif / a pouch or drawstring bag with an original pattern / a bag sized to suit your needs (e.g., big enough for a bento lunch box or an A4 file, for short outings, for those who carry a lot, or as a gift)",
+      "order.li2": "Creating a new design from scratch: +¥2,000",
+      "order.li3": "Base price, quantity, and delivery time will be determined through consultation.",
+      "prod.bulk": "For bulk orders, we are also happy to discuss a discount.",
+      "prod.card.cap": "Photo: Business card case.",
+      "prod.card.d1": "Keep the geometric patterns of Kogin-zashi close at hand. Useful as a card case or for everyday carry.",
+      "prod.card.name": "Business Card Case",
+      "prod.card.price": "Price: Please inquire (see \"<a href=\"#buy\">How to Buy</a>\" below)",
+      "prod.coaster.cap": "Photo: Coaster.",
+      "prod.coaster.d1": "Bring the geometric patterns of Kogin-zashi to your table every day. Because each one is hand-stitched, no two look quite the same.",
+      "prod.coaster.name": "Coaster",
+      "prod.coaster.price": "Price: ¥700",
+      "prod.heading": "Our Products",
+      "prod.kogin.lead": "We shape Tsugaru's traditional sashiko technique, Kogin-zashi, into things you can use every day. Because every geometric pattern is hand-stitched, even the same design looks a little different each time.",
+      "prod.kozeniire.alt": "A Kogin-zashi coin purse resting on two open palms",
+      "prod.kozeniire.d1": "A palm-sized coin purse with a zipper.",
+      "prod.kozeniire.name": "Kogin-zashi Coin Purse",
+      "prod.kozeniire.price": "Price: From ¥1,300 (prices vary by store)",
+      "prod.kumasuzu.cap": "Photo: Kogin bear bell.",
+      "prod.kumasuzu.d1": "A bear bell wrapped in Kogin-zashi embroidery. The clasp can be adjusted to keep the bell silent, so it works as an everyday keychain as well as a trail bell — clip it to a bag or backpack with a carabiner.",
+      "prod.kumasuzu.name": "Kogin Bear Bell",
+      "prod.kumasuzu.price": "Price: Please inquire (see \"<a href=\"#buy\">How to Buy</a>\" below)",
+      "prod.lead": "Omamori charms, coasters, and one-of-a-kind earrings have fixed prices, listed below. Prices for other items vary by specification — please check \"<a href=\"#buy\">How to Buy</a>\" below for details.",
+      "prod.nebuta.cap": "Photo: Nebuta-pattern tote bag.",
+      "prod.nebuta.d1": "Indigo-and-white fabric featuring the faces of Nebuta floats, shaped into tote bags, drawstring pouches, and shoulder pouches — a piece of Aomori you can carry with you. Please ask us about sizes.",
+      "prod.nebuta.price": "Price: Please inquire (see \"<a href=\"#buy\">How to Buy</a>\" below)",
+      "prod.omamori.cap": "Photo: Omamori charm.",
+      "prod.omamori.d1": "Our director — who also holds the Buddhist title of Ajari in the Shingon school — performs a tamashii-ire (spirit-infusion blessing) on each charm, one at a time.",
+      "prod.omamori.d2": "Each one is a one-of-a-kind piece — the thread chosen, the shape formed, and finished by hand. Keep one for yourself, or give one to someone important to you.",
+      "prod.omamori.name": "Omamori",
+      "prod.omamori.price": "Price: ¥700",
+      "prod.pierce.cap": "Photo: Earrings.",
+      "prod.pierce.d1": "Earrings combining beads, tassels, crochet work, and glass beads. Because each maker chooses their own materials, no two pairs are ever the same.",
+      "prod.pierce.price": "Price: ¥500",
+      "prod.pouch.cap": "Photo: Pouch.",
+      "prod.pouch.d1": "An everyday pouch featuring hand-stitched Kogin patterns. Please ask us about sizes.",
+      "prod.pouch.name": "Pouch",
+      "prod.pouch.price": "Price: Please inquire (see \"<a href=\"#buy\">How to Buy</a>\" below)",
+      "prod.sub.kogin": "Kogin-zashi",
+      "prod.sub.nebuta": "Nebuta-Pattern Bags & Drawstring Pouches",
+      "prod.sub.pierce": "One-of-a-Kind Earrings",
+      "prod.tote.alt2": "Holding the Kogin-zashi tote bag",
+      "prod.tote.cap": "Photo: Tote bag.",
+      "prod.tote.d1": "A bag built around Kogin-zashi, one that grows more comfortable in hand the more you use it. Please ask us about sizes.",
+      "prod.tote.name": "Tote Bag",
+      "prod.tote.price": "Price: Please inquire (see \"<a href=\"#buy\">How to Buy</a>\" below)",
+      "story.cap1": "Photo: Hands stitching Kogin-zashi.",
+      "story.cap2": "Photo: A bag made from Nebuta-pattern fabric.",
+      "story.cap3": "Photo: One-of-a-kind earrings.",
+      "story.heading": "Born from the Handcraft of Tsugaru",
+      "story.p1": "Kogin-zashi began as a practical craft in the farming villages of Tsugaru. During the Edo period, farmers in this region were forbidden from wearing cotton kimono, and had to survive the long winters wrapped in nothing but coarse hemp cloth. To make that cloth a little stronger and a little warmer, women stitched cotton thread into the weave, filling it in stitch by stitch.",
+      "story.p2": "A handcraft born of survival has come down to us as a thing of geometric beauty. Kogin-zashi is counted among Japan's three great sashiko embroidery traditions. At Heart Spot, we stitch it — one piece at a time — into coasters, Omamori charms, pouches, and bags.",
+      "story.p3": "The other pillar of our work is fabric printed with Nebuta imagery — indigo-and-white cloth featuring the faces of Nebuta floats. We shape this fabric into bags and drawstring pouches, turning the memory of the festival into something you can carry every day.",
+      "story.p4": "Our one-of-a-kind earrings are made from beads, tassels, crochet work, and glass beads — each maker choosing their own materials and combinations. Our Omamori charms, too, are one-of-a-kind pieces: the thread is chosen, the shape is formed, and each one is finished by hand.",
+      "story.p5": "The people who make these items are artisans with disabilities. But that is not the reason we hope you'll choose them. We want you to choose them for the careful handwork that carries on Tsugaru's traditional craft, for the time spent facing a single piece of cloth and a single thread, and for the goodness of the objects that time produces.",
+      "story.p6": "The cloth of Tsugaru, the memory of the festival, and the work of everyday hands. Heart Spot's products are made where these things meet.",
+      "story.sub1": "Turning Nebuta Memories into Everyday Objects",
+      "story.sub2": "No Two Are Alike"
+    },
+    zh: {
+      "about.addr": "地址：青森県青森市浜田豊田368",
+      "about.heading": "關於 Heart Spot",
+      "about.ig": "Instagram：@heartspot.4327",
+      "about.mail": "電子郵件：heartspot017@gmail.com",
+      "about.org": "Heart Spot",
+      "about.p1": "Heart Spot 是位於青森縣青森市濱田的一間地區工作坊。運用津輕傳統工藝小巾刺，以及繪有睡魔圖案的布料，一件一件以手工方式製作商品。",
+      "about.tel": "電話：017-773-4327",
+      "buy.b1.p1": "目前，以下店家皆有販售我們的商品。",
+      "buy.b1.p2": "您可以在店內實際看到商品後再購買。各店家販售的商品項目不盡相同。",
+      "buy.b1.title": "① 於販售店家",
+      "buy.b2.ig": "亦歡迎透過 Instagram 私訊與我們聯繫（<a class=\"contact-link\" href=\"https://www.instagram.com/heartspot.4327/\" target=\"_blank\" rel=\"noopener\">@heartspot.4327</a>）。",
+      "buy.b2.mail": "電子郵件：heartspot017@gmail.com",
+      "buy.b2.p1": "若您附近沒有販售店家，或欲洽詢訂製服務、大量訂購，歡迎透過電話或電子郵件與我們聯繫。",
+      "buy.b2.pay": "付款方式除現金外，亦可使用行動支付／電子支付。",
+      "buy.b2.tel": "電話：017-773-4327",
+      "buy.b2.title": "② 電話・電子郵件洽詢",
+      "buy.heading": "購買方式",
+      "buy.lead": "Heart Spot 的商品，可透過以下兩種方式購買。",
+      "buy.store1": "浅虫金治郎プリン",
+      "buy.store2": "あんてな青森",
+      "buy.store3": "ひょうたん茶屋",
+      "buy.store4": "酸ヶ湯温泉",
+      "buy.store5": "ねこおた",
+      "buy.store6": "ハートスポット事業所内",
+      "hero.cap": "照片：封面用。特寫小巾刺布料或手作中的雙手。",
+      "hero.catch": "一塊布裡，<br>藏著手作的時光。",
+      "hero.cta": "查看商品 ↓",
+      "hero.guide": "本頁面將為您介紹小巾刺、睡魔圖案小物，以及獨一無二的飾品。",
+      "hero.lead": "青森市濱田的工作坊「Heart Spot」，將津輕的手作技藝，一件一件地化為作品。",
+      "meta.description": "為您介紹青森市濱田工作坊 Heart Spot 手作的津輕小巾刺、睡魔（Nebuta）祭典圖案小物，以及獨一無二的飾品。",
+      "meta.title": "Heart Spot ― 津輕手作工藝型錄",
+      "nav.about": "關於 Heart Spot",
+      "nav.buy": "購買方式",
+      "nav.foot": "017-773-4327<br>青森市浜田豊田368",
+      "nav.order": "訂製服務",
+      "nav.products": "商品",
+      "nav.story": "津輕手作",
+      "nav.title": "目錄",
+      "nav.top": "首頁",
+      "order.cap": "照片：訂製完成的作品。",
+      "order.heading": "亦接受訂製服務",
+      "order.lead": "我們可以將名字、喜愛的圖案，或紀念日的設計，融入小巾刺或布料之中，製作出獨一無二的御守或小物。也很適合作為送給重要之人的禮物。",
+      "order.li1": "範例：將姓名或姓名縮寫化為圖案的御守／喜愛圖案的小巾刺小物／原創花樣的小物包・束口袋／依用途訂製尺寸的包包（例如：可放入便當、可放入A4資料夾、輕便外出用、適合物品較多的人、送禮用等）",
+      "order.li2": "若需全新設計圖案：+2,000日圓",
+      "order.li3": "商品本身的價格、數量與交貨時間，將透過討論後決定。",
+      "prod.bulk": "大量訂購時，亦歡迎洽詢折扣優惠。",
+      "prod.card.cap": "照片：名片夾。",
+      "prod.card.d1": "讓小巾刺的幾何圖案陪伴在您身邊。可作為卡片夾，也適合日常隨身攜帶。",
+      "prod.card.name": "名片夾",
+      "prod.card.price": "價格：另議（詳情請參閱下方「<a href=\"#buy\">購買方式</a>」）",
+      "prod.coaster.cap": "照片：杯墊。",
+      "prod.coaster.d1": "將小巾刺的幾何圖案帶上您的餐桌。因為是手工刺繡，每一片都有不同的風貌。",
+      "prod.coaster.name": "杯墊",
+      "prod.coaster.price": "價格：700日圓",
+      "prod.heading": "商品介紹",
+      "prod.kogin.lead": "我們將津輕傳統的刺子繡技法「小巾刺」，化為日常可用的物品。幾何圖案皆為一針一線手工繡製，即使是相同的花樣，也會呈現出不同的風貌。",
+      "prod.kozeniire.alt": "放在雙手掌心上的小巾刺零錢包",
+      "prod.kozeniire.d1": "手掌大小、附拉鍊的零錢包。",
+      "prod.kozeniire.name": "小巾刺零錢包",
+      "prod.kozeniire.price": "價格：1,300日圓起（依販售店鋪而異）",
+      "prod.kumasuzu.cap": "照片：小巾刺熊鈴。",
+      "prod.kumasuzu.d1": "在熊鈴上飾以小巾刺繡。可透過扣具調整讓鈴鐺不發出聲響，因此從登山健行到日常外出，都能用登山扣掛在包包或背包上使用。",
+      "prod.kumasuzu.name": "小巾刺熊鈴",
+      "prod.kumasuzu.price": "價格：另議（詳情請參閱下方「<a href=\"#buy\">購買方式</a>」）",
+      "prod.lead": "御守、杯墊、獨一無二的耳環皆為固定價格，可直接參考以下標示。其他商品則依規格而定價，詳情請參閱下方「<a href=\"#buy\">購買方式</a>」。",
+      "prod.nebuta.cap": "照片：睡魔圖案托特包。",
+      "prod.nebuta.d1": "繪有睡魔燈臉譜的藍白布料，製成托特包、束口袋與肩背小包。是能隨身攜帶的一份青森風情。尺寸歡迎洽詢。",
+      "prod.nebuta.price": "價格：另議（詳情請參閱下方「<a href=\"#buy\">購買方式</a>」）",
+      "prod.omamori.cap": "照片：御守。",
+      "prod.omamori.d1": "本會理事長同時亦具備真言宗阿闍梨的身分，會為每一件御守進行「魂入」（注入心意的祈福儀式）。",
+      "prod.omamori.d2": "挑選線材、整理形狀，一件一件親手完成，皆是獨一無二的作品。可作為自己的護身之物，也適合作為送給重要之人的禮物。",
+      "prod.omamori.name": "御守",
+      "prod.omamori.price": "價格：700日圓",
+      "prod.pierce.cap": "照片：耳環。",
+      "prod.pierce.d1": "結合串珠、流蘇、鉤織與玻璃珠的耳環。因為每位創作者選用的素材皆不相同，因此沒有任何兩件是完全一樣的。",
+      "prod.pierce.price": "價格：500日圓",
+      "prod.pouch.cap": "照片：小物包。",
+      "prod.pouch.d1": "飾以手工刺繡小巾圖案的日常小物包。尺寸歡迎洽詢。",
+      "prod.pouch.name": "小物包",
+      "prod.pouch.price": "價格：另議（詳情請參閱下方「<a href=\"#buy\">購買方式</a>」）",
+      "prod.sub.kogin": "小巾刺",
+      "prod.sub.nebuta": "睡魔圖案提袋・束口袋",
+      "prod.sub.pierce": "獨一無二的耳環",
+      "prod.tote.alt2": "手提小巾刺托特包的樣子",
+      "prod.tote.cap": "照片：托特包。",
+      "prod.tote.d1": "以小巾刺為主角的提袋，使用越久，越顯得溫潤順手。尺寸歡迎洽詢。",
+      "prod.tote.name": "托特包",
+      "prod.tote.price": "價格：另議（詳情請參閱下方「<a href=\"#buy\">購買方式</a>」）",
+      "story.cap1": "照片：正在繡小巾刺的雙手。",
+      "story.cap2": "照片：睡魔圖案布料製成的提袋。",
+      "story.cap3": "照片：獨一無二的耳環。",
+      "story.heading": "誕生於津輕手作的工藝",
+      "story.p1": "小巾刺誕生於津輕的農村，原本是一項實用的技藝。江戶時代，這片土地上的農民被禁止穿著棉製和服，只能靠著一件織眼粗疏的麻布，撐過漫長的寒冬。為了讓布料稍微堅固一些、溫暖一些，婦女們用棉線一針一針地將布目填滿。",
+      "story.p2": "這項為了生存而生的手藝，如今化為幾何圖案之美流傳至今。這項技法，是日本三大刺子繡之一。在 Heart Spot，我們將它一針一針地繡進杯墊、御守、小物包和提袋之中。",
+      "story.p3": "另一項核心工藝，是印有睡魔圖案的布料——藍白相間、繪有睡魔燈臉譜的布。我們將這種布料製成提袋與束口袋，把祭典的記憶，轉化為日常可用的物品。",
+      "story.p4": "獨一無二的耳環，是由串珠、流蘇、鉤織與玻璃珠等素材組合而成，每位創作者都選擇自己喜歡的材料與搭配。御守也是如此，挑選線材、整理形狀，一件一件親手完成，皆是獨一無二的作品。",
+      "story.p5": "製作這些商品的，是身心障礙的創作者們。但我們希望您選擇這些商品的理由，並不在此。我們希望您是因為那份傳承津輕傳統工藝的細心手藝、面對一塊布、一條線所投入的時間，以及由此誕生的作品本身的美好，而選擇它們。",
+      "story.p6": "津輕的布與祭典的記憶，以及日常的手作。Heart Spot 的商品，正是誕生於這些元素的交會之處。",
+      "story.sub1": "把睡魔的記憶，化為日常器物",
+      "story.sub2": "沒有兩件是相同的"
+    }
+  };
+  /* ---- 差し替え対象の収集。同時に日本語（既定表示）を控える ---- */
+  var nodes = [];
+  function push(key, get, set, optional, el){
+    if(I18N.ja[key] === undefined) I18N.ja[key] = get();
+    nodes.push({ key:key, get:get, set:set, optional:!!optional,
+                 el:el || null, langOnly:el ? el.getAttribute('data-lang-only') : null });
+  }
+  /* 言語限定で出す／隠す要素（物語セクションのC案構成） */
+  var langOnly = [];
+  Array.prototype.forEach.call(document.querySelectorAll('[data-lang-only]'), function(el){
+    langOnly.push({ el:el, langs:el.getAttribute('data-lang-only').split(/\s+/) });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-i18n],[data-i18n-html]'), function(el){
+    var isHtml = el.hasAttribute('data-i18n-html');
+    var key = el.getAttribute(isHtml ? 'data-i18n-html' : 'data-i18n');
+    push(key,
+      function(){ return isHtml ? el.innerHTML : el.textContent; },
+      function(v, hide){
+        el.hidden = !!hide;
+        if(hide) return;
+        if(isHtml){ if(el.innerHTML !== v) el.innerHTML = v; }
+        else if(el.textContent !== v){ el.textContent = v; }
+      },
+      el.hasAttribute('data-i18n-optional'), el);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-i18n-alt]'), function(el){
+    push(el.getAttribute('data-i18n-alt'),
+      function(){ return el.getAttribute('alt'); },
+      function(v){ if(el.getAttribute('alt') !== v) el.setAttribute('alt', v); },
+      false, el);
+  });
+  var metaDesc = document.querySelector('meta[name="description"]');
+  push('meta.title', function(){ return document.title; }, function(v){ document.title = v; });
+  if(metaDesc){
+    push('meta.description',
+      function(){ return metaDesc.getAttribute('content'); },
+      function(v){ metaDesc.setAttribute('content', v); });
+  }
+
+  /* ---- 未訳キーの検出（流し込み漏れ検出用）。キーは重複を除いて数える ---- */
+  function scan(lang){
+    var dict = I18N[lang] || {}, r = { missing:[], hidden:[], keys:[] };
+    nodes.forEach(function(n){
+      if(n.langOnly && n.langOnly.indexOf(lang) < 0) return;  /* その言語に出ない要素は対象外 */
+      if(r.keys.indexOf(n.key) < 0) r.keys.push(n.key); else return;
+      var v = dict[n.key];
+      if(v === undefined || v === null || v === '') (n.optional ? r.hidden : r.missing).push(n.key);
+    });
+    return r;
+  }
+  function report(lang){
+    if(lang === 'ja'){
+      console.info('[i18n] 日本語（既定表示・DOM無変更）／未訳キー: en ' + scan('en').missing.length
+        + ' 件, zh ' + scan('zh').missing.length + ' 件（対象 ' + scan('ja').keys.length + ' キー）');
+      return;
+    }
+    var r = scan(lang), total = r.keys.length, done = total - r.missing.length - r.hidden.length;
+    if(!r.missing.length){
+      console.info('[i18n] ' + lang + ': 未訳キー 0 件（翻訳済 ' + done + ' / 対象 ' + total + '）');
+    }else{
+      console.warn('[i18n] ' + lang + ': 未訳 ' + r.missing.length + ' 件は日本語で表示中'
+        + '（翻訳済 ' + done + ' / 対象 ' + total + '・意図的な非表示 ' + r.hidden.length + ' 件）');
+      console.warn('[i18n] ' + lang + ' 未訳キー一覧: ' + r.missing.join(', '));
+    }
+  }
+  /* DevTools用ヘルパ: 未訳キー＋日本語原文の雛形を出す */
+  window.i18nSkeleton = function(lang){
+    var out = {};
+    scan(lang || 'en').missing.forEach(function(k){ out[k] = I18N.ja[k]; });
+    console.log(JSON.stringify(out, null, 2));
+    return out;
+  };
+  window.i18nStatus = function(){
+    return { keys:scan('ja').keys.length, nodes:nodes.length, en:scan('en'), zh:scan('zh') };
+  };
+
+  /* ---- 適用 ---- */
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.langbar__btn'));
+  var current = null;
+  function apply(lang, silent){
+    if(!HTML_LANG[lang]) lang = 'ja';
+    var dict = I18N[lang] || {};
+    langOnly.forEach(function(o){ o.el.hidden = o.langs.indexOf(lang) < 0; });
+    nodes.forEach(function(n){
+      if(n.langOnly && n.el && n.el.hidden) return;   /* その言語では出さない要素は触らない */
+      var v = dict[n.key];
+      if(v === undefined || v === null || v === ''){
+        if(n.optional && lang !== 'ja'){ n.set('', true); return; }
+        v = I18N.ja[n.key];            /* 未訳は日本語のまま出す */
+      }
+      n.set(v, false);
+    });
+    document.documentElement.lang = HTML_LANG[lang];
+    buttons.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.lang === lang)); });
+    current = lang;
+    if(!silent) report(lang);
+  }
+
+  function store(v){ try{ localStorage.setItem(STORE_KEY, v); }catch(e){} }
+  function load(){ try{ return localStorage.getItem(STORE_KEY); }catch(e){ return null; } }
+
+  buttons.forEach(function(b){
+    b.addEventListener('click', function(){
+      var lang = b.dataset.lang;
+      if(lang === current) return;
+      store(lang);
+      apply(lang);
+    });
+  });
+
+  /* ---- 起動 ---- */
+  var q = null;
+  try{ q = new URLSearchParams(location.search).get('lang'); }catch(e){}
+  var initial = HTML_LANG[q] ? q : (HTML_LANG[load()] ? load() : 'ja');
+  if(q && HTML_LANG[q]) store(q);
+  if(initial === 'ja'){
+    /* 既定（日本語）はDOMを一切書き換えない＝改修前と1pxも変わらないことを保証する */
+    buttons.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.lang === 'ja')); });
+    current = 'ja';
+    report('ja');
+  }else{
+    apply(initial);
+  }
+})();
+</script>
+</body>
+</html>
